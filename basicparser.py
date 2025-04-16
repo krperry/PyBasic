@@ -260,6 +260,14 @@ class BASICParser:
             self.__printstmt()
             return None
 
+        elif self.__token.category == Token.SAY:
+            self.__printstmt()
+            return None
+
+        elif self.__token.category == Token.BRAILLE:
+            self.__printstmt()
+            return None
+
         elif self.__token.category == Token.LET:
             self.__letstmt()
             return None

@@ -119,6 +119,8 @@ class BASICToken:
         SEMICOLON       = 86  # SEMICOLON
         LEFT            = 87  # LEFT$ function
         RIGHT           = 88  # RIGHT$ function
+        SAY = 89
+        BRAILLE = 90
 
         # Displayable names for each token category
         catnames = ['EOF', 'LET', 'LIST', 'PRINT', 'RUN',
@@ -137,7 +139,7 @@ class BASICToken:
         'MAX', 'MIN', 'INSTR', 'AND', 'OR', 'NOT', 'PI',
         'RNDINT', 'OPEN', 'HASH', 'CLOSE', 'FSEEK', 'APPEND',
         'OUTPUT', 'RESTORE', 'RNDINT', 'TAB', 'SEMICOLON',
-        'LEFT', 'RIGHT']
+        'LEFT', 'RIGHT', 'SAY', 'BRAILLE']
 
         smalltokens = {'=': ASSIGNOP, '(': LEFTPAREN, ')': RIGHTPAREN,
                        '+': PLUS, '-': MINUS, '*': TIMES, '/': DIVIDE,
@@ -174,13 +176,13 @@ class BASICToken:
                     'CLOSE': CLOSE, 'FSEEK': FSEEK,
                     'APPEND': APPEND, 'OUTPUT':OUTPUT,
                     'RESTORE': RESTORE, 'TAB': TAB,
-                    'LEFT$': LEFT, 'RIGHT$': RIGHT}
+                    'LEFT$': LEFT, 'RIGHT$': RIGHT, 'SAY': SAY, 'BRAILLE': BRAILLE}
 
 
         # Functions
         functions = {ABS, ATN, COS, EXP, INT, LOG, POW, RND, SIN, SQR, TAN,
                      CHR, ASC, MID, TERNARY, STR, VAL, LEN, UPPER, LOWER,
-                     ROUND, MAX, MIN, INSTR, PI, RNDINT, TAB, LEFT, RIGHT}
+                     ROUND, MAX, MIN, INSTR, PI, RNDINT, TAB, LEFT, RIGHT, SAY, BRAILLE}
 
         def __init__(self, column, category, lexeme):
 
