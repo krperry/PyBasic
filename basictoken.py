@@ -129,6 +129,8 @@ class BASICToken:
         TIME_SECOND =  96 # System  second
         CLICK =  97
         BEEP = 98
+        ALLCAPS = 99
+        UNITTYPE = 100
 
 
         # Displayable names for each token category
@@ -152,7 +154,8 @@ class BASICToken:
         'SAY', 'BRAILLE', 
         'DATE_DAY', 'DATE_MONTH', 'DATE_YEAR',
         'TIME_HOUR', 'TIME_MINUTE', 'TIME_SECOND'
-        'CLICK', 'BEEP'
+        'CLICK', 'BEEP',
+        'ALLCAPS', 'UNITTYPE'
         ]
 
         smalltokens = {'=': ASSIGNOP, '(': LEFTPAREN, ')': RIGHTPAREN,
@@ -194,6 +197,7 @@ class BASICToken:
                             'DATE_DAY': DATE_DAY, 'DATE_MONTH': DATE_MONTH, 'DATE_YEAR': DATE_YEAR,
         'TIME_HOUR': TIME_HOUR, 'TIME_MINUTE': TIME_MINUTE, 'TIME_SECOND': TIME_SECOND,
         'CLICK': CLICK, 'BEEP': BEEP,
+        'ALLCAPS':ALLCAPS, 'UNITTYPE': UNITTYPE
         }
 
 
@@ -203,7 +207,8 @@ class BASICToken:
                      ROUND, MAX, MIN, INSTR, PI, RNDINT, TAB, LEFT, RIGHT, SAY, BRAILLE,
                      DATE_DAY,DATE_MONTH,DATE_YEAR,
                      TIME_HOUR, TIME_MINUTE, TIME_SECOND,
-                     CLICK, BEEP
+                     CLICK, BEEP,
+                     ALLCAPS, UNITTYPE
                      }
 
         def __init__(self, column, category, lexeme):

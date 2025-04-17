@@ -261,9 +261,14 @@ class BASICParser:
             self.__assignmentstmt()
             return None
         
+        elif self.__token.category == Token.ALLCAPS:        
+            self.__data._ALLCAPS = not self.__data._allcaps
+            return None
+        
         elif self.__token.category == Token.BEEP:        
             beep()
             return None
+
 
         elif self.__token.category == Token.CLICK:
             click()
@@ -1425,6 +1430,9 @@ class BASICParser:
                 random.seed(arg)
 
             return random.random()
+
+        if category == Token.UNITTYPE:
+            return self.__data._unittype
 
         if category == Token.PI:
             return math.pi
