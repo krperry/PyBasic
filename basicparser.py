@@ -20,6 +20,10 @@ from flowsignal import FlowSignal
 import math
 import datetime
 import random
+
+from music import sound, click, beep
+
+
 try:
     from time import ticks_ms as monotonic
 except:
@@ -256,6 +260,15 @@ class BASICParser:
         if self.__token.category == Token.NAME:
             self.__assignmentstmt()
             return None
+        
+        elif self.__token.category == Token.BEEP:        
+            beep()
+            return None
+
+        elif self.__token.category == Token.CLICK:
+            click()
+            return None
+
 
         elif self.__token.category == Token.PRINT:
             self.__printstmt()
