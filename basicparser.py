@@ -18,6 +18,7 @@
 from basictoken import BASICToken as Token
 from flowsignal import FlowSignal
 import math
+import datetime
 import random
 try:
     from time import ticks_ms as monotonic
@@ -1415,7 +1416,27 @@ class BASICParser:
         if category == Token.PI:
             return math.pi
 
+        if category == Token.DATE_DAY:
+                return datetime.datetime.now().day
+
+        if category == Token.DATE_MONTH:
+                return datetime.datetime.now().month
+
+        if category == Token.DATE_YEAR:
+            return datetime.datetime.now().year
+        
+        if category == Token.TIME_HOUR:
+            return datetime.datetime.now().hour
+
+        if category == Token.TIME_MINUTE:
+            return datetime.datetime.now().minute
+
+        if category == Token.TIME_SECOND:
+            return datetime.datetime.now().second
+
         if category == Token.RNDINT:
+
+            
             self.__consume(Token.LEFTPAREN)
 
             self.__expr()
