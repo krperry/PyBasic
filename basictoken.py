@@ -131,6 +131,15 @@ class BASICToken:
         BEEP = 98
         ALLCAPS = 99
         UNITTYPE = 100
+        GET = 101 #single key input
+        RENAME = 103 # rename file
+        SOUND = 104  # play freq, duration, volume
+        SETSOUND = 105 # set next note in sound buffer 
+        PLAY = 106 # play sound buffer from pos
+        ERASE = 107 # erase all variables
+        EMPTY = 108 #empty sound  buffer
+        SETPOS  =109 # set sound buffer play position
+        NOTES = 110  # return number of notes in buffer.
 
 
         # Displayable names for each token category
@@ -155,7 +164,10 @@ class BASICToken:
         'DATE_DAY', 'DATE_MONTH', 'DATE_YEAR',
         'TIME_HOUR', 'TIME_MINUTE', 'TIME_SECOND'
         'CLICK', 'BEEP',
-        'ALLCAPS', 'UNITTYPE'
+        'ALLCAPS', 'UNITTYPE',
+        'GET', 'RENAME', 'SOUND', 
+        'SETSOUND', 'PLAY', 'ERASE', 'EMPTY', 'SETPOS',
+'NOTES'
         ]
 
         smalltokens = {'=': ASSIGNOP, '(': LEFTPAREN, ')': RIGHTPAREN,
@@ -197,7 +209,10 @@ class BASICToken:
                             'DATE_DAY': DATE_DAY, 'DATE_MONTH': DATE_MONTH, 'DATE_YEAR': DATE_YEAR,
         'TIME_HOUR': TIME_HOUR, 'TIME_MINUTE': TIME_MINUTE, 'TIME_SECOND': TIME_SECOND,
         'CLICK': CLICK, 'BEEP': BEEP,
-        'ALLCAPS':ALLCAPS, 'UNITTYPE': UNITTYPE
+        'ALLCAPS':ALLCAPS, 'UNITTYPE': UNITTYPE,
+        'GET': GET, 'RENAME': RENAME, 'SOUND': SOUND, 
+        'SETSOUND': SETSOUND, 'PLAY': PLAY, 'ERASE': ERASE, 'EMPTY': EMPTY, 'SETPOS': SETPOS,
+'NOTES': NOTES
         }
 
 

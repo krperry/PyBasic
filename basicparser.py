@@ -307,6 +307,10 @@ class BASICParser:
             self.__inputstmt()
             return None
 
+        elif self.__token.category == Token.GET:
+            self.__inputstmt()
+            return None
+
         elif self.__token.category == Token.DIM:
             self.__dimstmt()
             return None
