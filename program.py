@@ -46,7 +46,7 @@ class BASICData:
         self._allcaps = False
 
         #unittype 
-        self._unittype = 1
+        self._unittype = "BT Speak"
 
     def delete(self):
         self.__datastmts.clear()
