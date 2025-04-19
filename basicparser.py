@@ -262,7 +262,7 @@ class BASICParser:
             return None
         
         elif self.__token.category == Token.ALLCAPS:        
-            self.__data._ALLCAPS = not self.__data._allcaps
+            self.__data._allcaps = not self.__data._allcaps
             return None
         
         elif self.__token.category == Token.BEEP:        
@@ -833,7 +833,7 @@ class BASICParser:
                 inputvals = ((self.__file_handles[filenum].readline().replace("\n","")).replace("\r","")).split(',', (len(variables)-1))
                 valid_input = True
             else:
-                if  not self.__data._ALLCAPS :
+                if  not self.__data._allcaps:
                     inputvals = input(prompt).split(',', (len(variables)-1)) 
                 else:
                     inputvals = input(prompt).upper().split(',', (len(variables)-1)) 
