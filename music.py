@@ -15,25 +15,6 @@ AMPLITUDE = 28000
 PI = math.pi
 
 
-# ?? Smooth the waveform using a moving average
-def smooth_wave(samples, window_size=2):
-    smoothed = np.copy(samples)
-    for i in range(1, len(samples) - 1):
-        start = max(0, i - window_size)
-        end = min(len(samples), i + window_size + 1)
-        smoothed[i] = np.mean(samples[start:end])
-    return smoothed
-
-
-# ??? Fade in and fade out (in-place)
-def apply_envelope(samples, fade_ms):
-    fade_samples = int(SAMPLE_RATE * fade_ms / 1000)
-    for i in range(fade_samples):
-        fade = i / fade_samples
-        samples[i] *= fade  # fade-in
-        samples[-i - 1] *= fade  # fade-out
-    return samples
-
 
 # ?? Main sound function
 def sound(freq, duration_ms, volume):
@@ -43,11 +24,7 @@ def sound(freq, duration_ms, volume):
     t = np.linspace(0, duration_ms / 1000.0, total_samples, False)
     wave = np.sin(2 * PI * freq * t) * AMPLITUDE * volume
     wave = wave.astype(np.int16)
-
-    # ?? Apply envelope and smooth
-    wave = apply_envelope(wave, fade_ms=10)
-    wave = smooth_wave(wave, window_size=2)
-
+    
     # ?? Convert to byte string and play
     sound_obj = pygame.mixer.Sound(buffer=wave.tobytes())
 
