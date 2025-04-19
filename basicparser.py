@@ -833,7 +833,11 @@ class BASICParser:
                 inputvals = ((self.__file_handles[filenum].readline().replace("\n","")).replace("\r","")).split(',', (len(variables)-1))
                 valid_input = True
             else:
-                inputvals = input(prompt).split(',', (len(variables)-1))
+                if  not self.__data._ALLCAPS :
+                    inputvals = input(prompt).split(',', (len(variables)-1)) 
+                else:
+                    inputvals = input(prompt).upper().split(',', (len(variables)-1)) 
+
 
             for variable in variables:
                 left = variable
