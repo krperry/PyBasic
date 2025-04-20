@@ -2,9 +2,8 @@
 5 rem Programmed by Marc Mulcahy
 7 rem May 9, 1995
 10 TEMPO = 120
-12 print "One moment please."
+12 print "One moment please..  Please rise!"
 20 GOSUB 20000
-25 print "back from gosub"
 30 Setsound C,QN
 35 Setsound 0,QN
 40 Setsound C*2,QN
@@ -77,6 +76,7 @@
 691 play
 692 next i
 695 sound 0,5
+696 print "Play Ball!"
 700 end
 20000 a = 110 : print "did a"
 20010 bf = 117
