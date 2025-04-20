@@ -37,22 +37,22 @@ def sound(freq, duration_ms, volume):
 
 def click():
     # Short, low-frequency sound for a click
-    sound(freq=1000, duration_ms=50, volume=0.5)
+    sound(freq=1000, duration_ms= .5 , volume=0.5)
 
 
 # Function to generate a system-like beep sound
 def beep():
     # Medium-duration, higher-frequency sound for a beep
-    sound(freq=2000, duration_ms=200, volume=0.7)
+    sound(freq=2000, duration_ms= 2, volume=0.7)
 
 
 # ?? Demo melody using our function
 if __name__ == "__main__":
     print("Playing smooth tones with pygame...")
-    sound(440, 250, 0.8)  # A4
-    sound(494, 250, 0.8)  # B4
-    sound(523, 500, 0.8)  # C5
-    sound(659, 1000, 0.8)  # E5
-    sound(587, 250, 0.8)  # D5
-    sound(523, 750, 0.8)  # C5
+    sound(440, 2.5, 0.8)  # A4
+    sound(494, 2.5, 0.8)  # B4
+    sound(523, 5, 0.8)  # C5
+    sound(659, 10, 0.8)  # E5
+    sound(587, 2.5, 0.8)  # D5
+    sound(523, 7.5, 0.8)  # C5
     print("Done!")
