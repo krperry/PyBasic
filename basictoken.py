@@ -131,15 +131,15 @@ class BASICToken:
     ALLCAPS = 99
     UNITTYPE = 100
     GET = 101  # single key input
-    RENAME = 103  # rename file
-    SOUND = 104  # play freq, duration, volume
-    SETSOUND = 105  # set next note in sound buffer
-    PLAY = 106  # play sound buffer from pos
-    ERASE = 107  # erase all variables
-    EMPTY = 108  # empty sound  buffer
-    SETPOS = 109  # set sound buffer play position
-    NOTES = 110  # return number of notes in buffer.
-    DELETE = 111  # DELETE a file
+    RENAME = 102  # rename file
+    SOUND = 103  # play freq, duration, volume
+    SETSOUND = 104  # set next note in sound buffer
+    PLAY = 105  # play sound buffer from pos
+    ERASE = 106  # erase all variables
+    EMPTY = 107  # empty sound  buffer
+    SETPOS = 108  # set sound buffer play position
+    NOTES = 109  # return number of notes in buffer.
+    DELETE = 110  # DELETE a file
 
     # Displayable names for each token category
     catnames = [
@@ -414,6 +414,16 @@ class BASICToken:
         BEEP,
         ALLCAPS,
         UNITTYPE,
+        GET,
+        RENAME,
+        SOUND,
+        SETSOUND,
+        PLAY,
+        ERASE,
+        EMPTY,
+        SETPOS,
+        NOTES,
+        DELETE,
     }
 
     def __init__(self, column, category, lexeme):

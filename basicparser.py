@@ -1,5 +1,4 @@
 #! /usr/bin/python
-
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 # This program is free software: you can redistribute it and/or modify
@@ -359,6 +358,23 @@ class BASICParser:
 
         elif self.__token.category == Token.SOUND:
             self.__soundstm()
+            return None
+
+        elif self.__token.category == Token.SETSOUND:
+            self.__setsoundstm()
+            return None
+
+        elif self.__token.category == Token.EMPTY:
+            self.__data._sound_data = []
+            self.__data._sound_position = 0
+            return None
+
+        elif self.__token.category == Token.PLAY:
+            self.__playstm()
+            return None
+
+        elif self.__token.category == Token.SETPOS:
+            self.__setposstm()
             return None
 
         elif self.__token.category == Token.FSEEK:
@@ -938,11 +954,12 @@ class BASICParser:
             variables.append(self.__operand_stack.pop())
 
             if variables[-1] < 20 or variables[-1] > 20000:  # out of hearing range.
-                raise RuntimeError(
-                    "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
-                    + str(self.__line_number)
-                    + " note  1."
-                )
+                if  variables[-1] != 0:
+                    raise RuntimeError(
+                        "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
+                        + str(self.__line_number)
+                        + " note  1."
+                    )
 
             # self.__advance()  # Advance past variable
 
@@ -966,12 +983,13 @@ class BASICParser:
                     if (
                         variables[-1] < 20 or variables[-1] > 20000
                     ):  # out of hearing range.
-                        raise RuntimeError(
-                            "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
-                            + str(self.__line_number)
-                            + " note "
-                            + str(count + 1)
-                        )
+                        if variables[-1] !=0:
+                            raise RuntimeError(
+                                "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
+                                + str(self.__line_number)
+                                + " note "
+                                + str(count + 1)
+                            )
 
                 #                self.__advance()  # Advance past variable
                 count += 1
@@ -985,6 +1003,102 @@ class BASICParser:
                 + " len "
                 + str(len(variables))
             )
+
+    def __setsoundstm(self):
+        """consume sound statement and play sound"""
+
+        self.__advance()  # Advance past sound token
+
+        # Acquire the comma separated input variables
+        variables = []
+        if not self.__tokenindex >= len(self.__tokenlist):
+            self.__expr()
+            variables.append(self.__operand_stack.pop())
+
+            if variables[-1] < 20 or variables[-1] > 20000:  # out of hearing range.
+                if variables[-1] !=0:
+                    raise RuntimeError(
+                        "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
+                        + str(self.__line_number)
+                        + " note  1."
+                    )
+
+            # self.__advance()  # Advance past variable
+
+            count = 1
+            while self.__token.category == Token.COMMA:
+                self.__advance()  # Advance past comma
+                self.__expr()
+                variables.append(self.__operand_stack.pop())
+                if count % 2:
+                    if variables[-1] < 0:
+                        raise RuntimeError(
+                            "Duration less than 0.  How does that work do you hear nothing before you listen?"
+                            + "Error on line "
+                            + str(self.__line_number)
+                            + " on note "
+                            + str(count + 1)
+                        )
+                else:
+                    if (
+                        variables[-1] < 20 or variables[-1] > 20000
+                    ):  # out of hearing range.
+                        if variables[-1] != 0:
+                            raise RuntimeError(
+                                "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
+                                + str(self.__line_number)
+                                + " note "
+                                + str(count + 1)
+                            )
+
+                #                self.__advance()  # Advance past variable
+                count += 1
+
+        if len(variables) % 2:
+            raise RuntimeError(
+                "Odd number of variables. Error  on line "
+                + str(self.__line_number)
+                + ". "
+                + str(count + 1)
+                + " len "
+                + str(len(variables))
+            )
+
+        self.__data._sound_data.extend(variables[:])
+
+    def __setposstm(self):
+        """soundpos  statement sets the position of sound buffer"""
+
+        self.__advance()  # Advance past setpos
+
+        self.__expr()
+        position = self.__operand_stack.pop()
+
+        if position < 0 or position > len(self.__data._sound_data):
+            raise RuntimeError(
+                "Error: Position not in the range 1 to "
+                + str(len(self.__data._sound_data))
+                + " on line "
+                + str(self.__line_number)
+                + " position = "
+                + str(position)
+            )
+
+        if not position % 2:
+            raise RuntimeError(
+                "Error: Position not starting on an odd note position. Error on line  "
+                + str(self.__line_number)
+            )
+
+        self.__data._sound_position = position - 1
+
+    def __playstm(self):
+        """play statement: plays notes in sound buffer"""
+        i = self.__data._sound_position
+        length = len(self.__data._sound_data)
+        while i < length:
+            sound(self.__data._sound_data[i], self.__data._sound_data[i + 1], 0.8)
+            i += 2
 
     def __inputstmt(self):
         """Parses an input statement, extracts the input
@@ -1704,6 +1818,9 @@ class BASICParser:
 
         if category == Token.PI:
             return math.pi
+
+        if category == Token.NOTES:
+            return len(self.__data._sound_data)
 
         if category == Token.DATE_DAY:
             return datetime.datetime.now().day
