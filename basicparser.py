@@ -357,6 +357,10 @@ class BASICParser:
             self.__renamestmt()
             return None
 
+        elif self.__token.category == Token.SOUND:
+            self.__soundstm()
+            return None
+
         elif self.__token.category == Token.FSEEK:
             self.__fseekstmt()
             return None
@@ -921,6 +925,66 @@ class BASICParser:
         self.__expr()
 
         self.__file_handles[filenum].seek(self.__operand_stack.pop())
+
+    def __soundstm(self):
+        """consume sound statement and play sound"""
+
+        self.__advance()  # Advance past sound token
+
+        # Acquire the comma separated input variables
+        variables = []
+        if not self.__tokenindex >= len(self.__tokenlist):
+            self.__expr()
+            variables.append(self.__operand_stack.pop())
+
+            if variables[-1] < 20 or variables[-1] > 20000:  # out of hearing range.
+                raise RuntimeError(
+                    "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
+                    + str(self.__line_number)
+                    + " note  1."
+                )
+
+            # self.__advance()  # Advance past variable
+
+            count = 1
+            while self.__token.category == Token.COMMA:
+                self.__advance()  # Advance past comma
+                self.__expr()
+                variables.append(self.__operand_stack.pop())
+                if count % 2:
+                    if variables[-1] < 0:
+                        raise RuntimeError(
+                            "Duration less than 0.  How does that work do you hear nothing before you listen?"
+                            + "Error on line "
+                            + str(self.__line_number)
+                            + " on note "
+                            + str(count + 1)
+                        )
+                    sound(variables[0], variables[1], 0.8)
+                    variables = []
+                else:
+                    if (
+                        variables[-1] < 20 or variables[-1] > 20000
+                    ):  # out of hearing range.
+                        raise RuntimeError(
+                            "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
+                            + str(self.__line_number)
+                            + " note "
+                            + str(count + 1)
+                        )
+
+                #                self.__advance()  # Advance past variable
+                count += 1
+
+        if variables:
+            raise RuntimeError(
+                "Odd number of variables. Error  on line "
+                + str(self.__line_number)
+                + ". "
+                + str(count + 1)
+                + " len "
+                + str(len(variables))
+            )
 
     def __inputstmt(self):
         """Parses an input statement, extracts the input
