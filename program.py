@@ -36,11 +36,11 @@ class BASICData:
         # Data pointer
         self.__next_data = 0
 
-        #Music Data list of ints
-        self.__music_data = []
+        #sound buffer list of freq , duration
+        self._sound_data = []
 
-        # PTR to note in the music data
-        # self.__music_position = 0
+        # PTR to note in the sound data
+        self._sound_position = 0
 
         #ALL CAPS global
         self._allcaps = False
@@ -51,8 +51,8 @@ class BASICData:
     def delete(self):
         self.__datastmts.clear()
         self.__next_data = 0
-        self.__music_data = []
-        self.__music_position = 0
+        self._sound_data = []
+        self._sound_position = 0
         self.__allcaps = False
         self.__unittype = 1
 
