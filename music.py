@@ -18,6 +18,7 @@ PI = math.pi
 
 # ?? Main sound function
 def sound(freq, duration_ms, volume):
+    duration_ms *= 100
     total_samples = int(SAMPLE_RATE * (duration_ms / 1000.0))
 
     # ?? Generate a sine wave
