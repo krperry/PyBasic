@@ -220,7 +220,7 @@ are all invalid.
 
 Numeric variables have no suffix, whereas string variables are always suffixed by '$'. Note that 'I' and 'I$' are
 considered to be separate variables. Note that string literals must always be enclosed within double quotes (not single quotes).
-Using no quotes will result in a syntax error. In addition, for floating point numbers less than one (e.g. 0.67), the decimal point must always be prefixed by a zero (e.g. .67 will be flagged as a syntax error).
+Using no quotes will result in a syntax error. 
 
 Array variables are defined using the **DIM** statement, which explicitly lists how
 many dimensions the array has, and the sizes of those dimensions:
@@ -1080,7 +1080,6 @@ control flow changes to the Program object, is used consistently throughout the 
 
 * It is not possible to renumber a program. This would require considerable extra functionality.
 * Negative values are printed with a space (e.g. '- 5') in program listings because of tokenization. This does not affect functionality.
-* Decimal values less than one must be expressed with a leading zero (i.e. 0.34 rather than .34)
 * User input values cannot be directly assigned to array variables in an **INPUT** or **READ** statement
 * Strings representing numbers (e.g. "10") can actually be assigned to numeric variables in **INPUT** and **READ** statements without an
 error, Python will silently convert them to integers.
