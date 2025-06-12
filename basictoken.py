@@ -126,20 +126,22 @@ class BASICToken:
     TIME_HOUR = 94  # System hour token
     TIME_MINUTE = 95  # System minute
     TIME_SECOND = 96  # System  second
-    CLICK = 97
-    BEEP = 98
-    ALLCAPS = 99
-    UNITTYPE = 100
-    GET = 101  # single key input
-    RENAME = 102  # rename file
-    SOUND = 103  # play freq, duration, volume
-    SETSOUND = 104  # set next note in sound buffer
-    PLAY = 105  # play sound buffer from pos
-    ERASE = 106  # erase all variables
-    EMPTY = 107  # empty sound  buffer
-    SETPOS = 108  # set sound buffer play position
-    NOTES = 109  # return number of notes in buffer.
-    DELETE = 110  # DELETE a file
+    TIME_MSECOND = 97  # System  milli second
+    TIME_USECOND = 98  # System  milli second
+    CLICK = 99
+    BEEP = 100
+    ALLCAPS = 101
+    UNITTYPE = 102
+    GET = 103  # single key input
+    RENAME = 104  # rename file
+    SOUND = 105  # play freq, duration, volume
+    SETSOUND = 106  # set next note in sound buffer
+    PLAY = 107  # play sound buffer from pos
+    ERASE = 108  # erase all variables
+    EMPTY = 109  # empty sound  buffer
+    SETPOS = 110  # set sound buffer play position
+    NOTES = 111  # return number of notes in buffer.
+    DELETE = 112  # DELETE a file
 
     # Displayable names for each token category
     catnames = [
@@ -240,7 +242,10 @@ class BASICToken:
         "DATE_YEAR",
         "TIME_HOUR",
         "TIME_MINUTE",
-        "TIME_SECOND" "CLICK",
+        "TIME_SECOND",
+        "TIME_MSECOND",
+         "TIME_USECOND",
+           "CLICK",
         "BEEP",
         "ALLCAPS",
         "UNITTYPE",
@@ -355,6 +360,8 @@ class BASICToken:
         "TIME_HOUR": TIME_HOUR,
         "TIME_MINUTE": TIME_MINUTE,
         "TIME_SECOND": TIME_SECOND,
+        "TIME_MSECOND": TIME_MSECOND,
+        "TIME_USECOND": TIME_USECOND,
         "CLICK": CLICK,
         "BEEP": BEEP,
         "ALLCAPS": ALLCAPS,
@@ -410,6 +417,8 @@ class BASICToken:
         TIME_HOUR,
         TIME_MINUTE,
         TIME_SECOND,
+        TIME_MSECOND,
+        TIME_USECOND,
         CLICK,
         BEEP,
         ALLCAPS,

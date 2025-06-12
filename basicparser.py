@@ -1840,6 +1840,12 @@ class BASICParser:
         if category == Token.TIME_SECOND:
             return datetime.datetime.now().second
 
+        if category == Token.TIME_MSECOND:
+            return datetime.datetime.now().microsecond // 1000
+
+        if category == Token.TIME_USECOND:
+            return datetime.datetime.now().microsecond 
+
         if category == Token.RNDINT:
 
             self.__consume(Token.LEFTPAREN)
