@@ -17,10 +17,9 @@
 130 Silence = 0:  Gosub 2000 : rem Sound the alarm
 140 Gosub 3000 : rem Announcement
 150 Reply$ = " "
-160 rem while Reply$ <>  "y" and Reply$ <> "n"
 170   Print "Would you like to check your heart rate? Enter y or n?"
 180   Get Reply$
-185 if Reply$ <>  "y" and Reply$ <> "n" then goto 160
+185 if Reply$ <>  "y" and Reply$ <> "n" then goto 170
 190 If Reply$ = "y" then gosub 4000 : rem Check heart rate
 200 End : rem of main program
 205 : rem Help text
