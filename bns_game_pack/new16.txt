@@ -1,0 +1,57 @@
+                         So, What's New in V1.6?
+
+     Well, this release is a very minor one. I mainly released it to fix 
+up a few problems in version 1.5, and to fix the compatibility problems 
+with the blt40. I decided to try and fix all of the existing problems 
+before I create (or totally modify) an existing game.
+
+*Enhansements*
+
+     Mine has a new name (Bomb Field) and the filename is now bomb.bas. I 
+removed some useless code from the game also.
+     In hack, I fixed that negative fight counter problem (which caused no 
+harm anyway), and rewrote some of the store code.
+     You now get to choose whether you want sound or not in tic, and I 
+rewrote some of the code for speed improvements.
+     You can now specify whether or not you want sound in chase, and I 
+fixed a bug where it wouldn't tell you if player 2 dropped a bomb to the 
+right.
+     Bt (buried treasure) is now called point rally (with a new filename 
+of point.bas) because the game dealt more with points than with treasure 
+anyway. I added  two new killer games (marathon and Point Plunge) and 
+changed Count your Luck and Lucky Guess to more exciting games (well, at 
+least I thought so). I also fixed a problem with the bonus round. Other 
+games have been modified to give more points also. Finally, I added a 
+Massive Gain event which can reward you with tons of points.
+     I fixed a problem in battle where the speech would become choppy if 
+sound was off. If this happens in any other game, please let me know. I 
+also added another stat (your strongest hit).
+     Yikes! I fixed a problem in Gotcha which forced the program to stop 
+running when the computer landed on some one's house. I also fixed the bug 
+where, if you landed on the hospital and you didn't have the money 
+dropping syndrome, it would still tell you that you were cured of it. I 
+changed the code around where you roll dice so speech is less choppy and 
+things go faster (also did this to the busy street).
+     Arcade.lev now has one more sample level in it using the pause 
+command.
+     I updated games.txt to include more information for some of the 
+games.
+
+                                     
+                                Coming Up
+
+     Well, I'm not exactly sure what I'm going to do with the future of 
+these games. I've got no all star ideas of my own right now, but some 
+people have given me some ideas. One person suggested a base ball game; 
+which would be quite a challenge to program. I've got to get Point working 
+with the blt40 sooner or later; but it's not as easy as the other games 
+were because portions of it are sound oriented, which cause the blt40 to 
+shut off. I've also been asked to allow the user to save his hack game in 
+progress to a file and restore it later; just like what you can do in 
+Gotcha. This is certainly logical, because a user's game could end up 
+being a long one. Of course, I'm going to try to improve the existing 
+games as much as I can (speed, bugs, small additions). Well, who knows, I 
+may add some of this stuff in the next release. What do you think of these 
+suggestions anyway? Do you have your own suggestions? Please let me know 
+at daniel_zingaro@hotmail.com! I would also appreciate you filling in the file 
+called answer.txt and mailing me your responses.

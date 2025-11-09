@@ -19,8 +19,8 @@
 
 import sys
 import os
-from lexer import Lexer
-from program import Program
+from basic.lexer import Lexer
+from basic.program import Program
 
 def main():
     if len(sys.argv) != 2:

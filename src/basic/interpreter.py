@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/env python3
 
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -23,9 +23,9 @@ again.
 
 """
 
-from basictoken import BASICToken as Token
-from lexer import Lexer
-from program import Program
+from basic.basictoken import BASICToken as Token
+from basic.lexer import Lexer
+from basic.program import Program
 from sys import stderr
 
 

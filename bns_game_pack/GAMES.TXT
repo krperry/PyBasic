@@ -1,0 +1,471 @@
+            Dan's Basic Games 2.52 (daniel_zingaro@hotmail.com)
+
+     
+     ... And people thought note takers could only take notes!
+     
+     Welcome to my Basic games collection. These games, I believe, are  
+fun, challenging and easy to play. These games are all copyright 1999-2003 
+by  Daniel Zingaro. I take no responsibility for damages caused in any way by the use or misuse of these  
+games. They have been tested and work fine on my note taker, but I make no  
+such guarantee for other note takers. Any other side effects caused by the  
+playing of these games (for instance, change in personality, or violent  
+ideas obtained) are the responsibility of the user, and not the author. If  
+you have any comments or questions, mail me at daniel_zingaro@hotmail.com 
+and let me  know! These games are mainly for those long drives in the car, 
+or perhaps  those boring biology classes you go to every day (grin). 
+Basically, I want  you to have some fun with your note taker! As I get 
+more feedback, games  will be updated, new games will be added, and maybe 
+the weaker games will  be removed. This is version 2.52 and includes 
+seventeen games. I will tell  you now that you will find bugs in these 
+games. Don't worry, mail me with  the bug and I'll spray the repellant.
+     To run these games, you must have run.bns (included in this archive) installed on your note  
+taker. Also, you must have the game you want to play on your note taker. Then, to run a game, type o  
+chord, x, run, space, followed by the game name. All of my games will be  
+discussed now. The games all worked fine on my Bns 640 updated in 1994, 
+and work just as well on the December 1999 update I use now. I  have my 
+punctuation set to "some" and my speech is at the second fastest  rate.
+
+                                     
+                                                                          
+                                  Recall
+
+     
+     Recall is a game like Simon--except this one's got two games in one!  
+You can play the traditional Simon game where you memorize and repeat the  
+pattern of sounds, or you can play my version, where you remember numbers  
+instead. This is also good news for BLT40 users, as they can now benefit  
+from this game! When playing the numerical version, note that you must  
+repeat the pattern by typing in the actual number (for example, dot 2 for  
+number 1, dots 2 and 3 for number 2, and so on) and not simply the dot  
+associated with that number. For the sound version, you'll have to know  
+which key produces which sound; press l from the main menu to learn this.  
+If the game seems too easy for you, try increasing the number of sounds to  
+use, or the game difficulty.
+
+                                     
+                                                                          
+                                   Bomb
+
+     
+     This is a game which has a similar objective to mine sweeper.  
+Basically, you try and uncover all squares, by pressing c, which don't  
+have a bomb on them. If you uncover a square which does have a bomb on it,  
+you lose and the game is over. This game could take a bit getting used to, 
+but once you do, it's very fun! It includes online instructions, and you  
+get to select the number of bombs to place on the board.
+
+
+                                     
+                                                                          
+                                  Chase
+
+     
+     A two player game on one note taker? Yes; it's called chase! Player 1  
+and 2 alternate moves, attempting to kill the other player. You play on a  
+10x10 grid and you can drop bombs on your square, to the right or to the  
+left of you. A player dies when they step on a bomb. Online instructions  
+available.
+
+                                     
+                                                                          
+                                   Ball
+
+     
+     This is, I guess, a sort of football game. You complete plays to get  
+points; getting to yard 100 gets you a touchdown (7 points) and a field  
+goal gets you 3 points. You have 50 turns to see how many points you can  
+get. You can also play against the computer by answering "y" (or "d" for a  
+more difficult opponent) to the first question asked. Addicting! Online  
+instructions available.
+
+                                     
+                                                                          
+                                  Battle
+
+     
+     This is one of my favourite games! You fight a series of 20 enemies  
+and you basically try and kill them all. If your power goes to 0, you die;  
+same with your enemy. Before every fight, you pick a weapon which will  
+increase your stats or decrease your enemy's. When you win a fight, you  
+are usually given a special bonus, and there are even magic spells you can  
+use! Have fun with this one!
+
+                                     
+                                                                          
+                                   Tic
+
+     
+     Another two player game, this time a clone of the old classic,  
+tictacto! Online instructions available, but you basically try and get 3  
+x's (player 1) or 3 o's (player 2) across, down or diagonally. When you  
+move, you are first told your current row (up and down) and column (left  
+to right) and then, if taken up, the letter (x or o) on that square.  
+Undocumented feature: type the numbers 1, 2, or 3 to jump quickly to that  
+row!
+
+                                     
+                                                                          
+                                  Point
+
+     
+     Point Rally is a game where you play mini games to get points. Sort  
+of the same objective as ball; see how many points you can get in ten  
+turns. Some games are sound oriented, others are guessing games, and some  
+games even make you think a bit!
+
+                                     
+                                                                          
+                                     
+
+Arcade
+
+     
+     It's finally ready! The fastest, most frantic game ever created on  
+the note takers! This game will have your fingers (and brain) working over  
+time as you desperately try to hit the correct key before your time is up!  
+The greatest game I have ever made! Online instructions are available!  
+This game has twenty levels, and you can even make your own. Basically,  
+you rely on your reaction time to press keys very quickly. For instance,  
+if the unit says Hole, you press j to jump over it. When the unit says  
+enemy, you press a to attack it. If a tree arises, press c to climb it. If  
+the note taker tells you a lion is there, press h to hide! If you must  
+swim through water, press s. To walk across a street, press w. If the unit  
+says boulder, press d to duck. When you are asked for a password while  
+entering the game, type in a password you were given (when you got to a  
+high enough level) or hit any chord if you don't know a password. The  
+levels get quicker, faster, and most of all, more fun! I myself can't stop  
+playing this one! To make your own levels, create a computer braille file,  
+with the first line being a number of the amount of levels in the file.  
+The next line should be a description line, describing the current level.  
+Next, you must type a number on a line by itself for the speed of the  
+level (4 being almost the fastest, 3 giving the user almost no time at  
+all, 30 being pretty slow). For the remainder of the level, place one  
+character per line, depending on what you want the user to do. For  
+example, place a j on a line by itself to make the user encounter a hole  
+(so he must jump). Place a c on a line by itself to make the user  
+encounter a tree, so he must climb it, and so on. After ten such lines,  
+place another description line for the next level in your file (if the  
+first number in your file was greater than 1, of course). Continue the  
+same way you made the previous level, with the speed on a line by itself,  
+followed by ten one letter lines telling the program what the user must  
+do. For a random event (the program picks a hole, tree, enemy, lion, etc.  
+randomly) place rand as one of the ten lines of a level which instruct the  
+program on what the user must do. To place a fake, make one of the ten  
+lines begin with the word fake, followed by the fake out text to be  
+spoken, followed by the actual thing the user must do. For example, a line  
+reading fakewaterw would make the program say water, and then say street,  
+since the last letter was a w, so the user must walk. To pause or slow  
+down the level for a specified time, place a line in the file where you  
+want the level to pause. This line must contain the word pause, followed  
+by a two digit number (no space after pause and the number). The number is  
+the number of cycles to pause the level for (30 being about one second).  
+Note that a pause line does not count as one of the ten objectives of the  
+level, so you still must have ten one letter lines in the level. When you  
+have finished, run arcade, and when prompted for a password, type in cre  
+and next, the filename containing the levels. You can make as many levels  
+in this fashion as you like! A file called levels.arc has been distributed 
+with this package, and it is a sample set of levels which you can learn  
+from. If you like, you can send me your levels! If I like them, I'll  
+include them in the package! Give levels to your friends who also have  
+these games, and see if they can beat them! Nonstop fun, that's all I can  
+say!
+
+                                     
+                                                                          
+                                  Gotcha
+
+     
+     Are you ready? Introducing: The first board game for the Blazie note  
+takers! ... And much more than a board game at that. Just read these  
+features, and I think you'll agree:
+
+
+- The .bas file is 5 pages!
+- Up to four players can play, and they can be any mixture of human  
+    and computer players! You can have all human players, a mixture of 
+    human  and computer players, or watch some computer players play! You 
+    can even  play a one player game!
+- Save your game to a file, and restore it later!
+- The board has 60 positions, many which have interesting events  
+    associated with them 
+- Computer players can actually pose a challenge to human  
+    players--smart artificial intelligence routines are present!
+- You have the option of specifying when the game will end 
+- Players can easily view players locations, money, what the game goes  
+    up to, and much, much more!
+- Many random events--two games are never the same!
+
+     The point of this game is to gain money--by stealing, by getting  
+jobs, by assisting others--any way you can think of! At the start of the  
+game, you are asked for the amount of money a person has to get to win.  
+When a person reaches this amount, they are claimed the winner, and the  
+game ends. Every player continues to roll dice, move around the board, and  
+attempt to get money until the game ends. However, the ways players get  
+money are very interesting, how about some of these events:
+
+- Get a job at a shop and get paid every turn
+- Look after kids in a day care and get paid
+- Rob the bank if you want to take the risk (you are first told the  
+    percent chance of success!)
+- Rob sports equipment from tennis courts, or baseball diamonds and  
+    trade them in for money later 
+- Catch up with the fairy who moves on every player's turn and get  
+    some money from her 
+- Capture hostages and trade them in for cash 
+- Search houses for money 
+- Get good luck points from churches and get more money!
+- Rob certain places, and have other players bet on whether they think  
+    you will be successful or not! Very interesting and fun!
+- Search garbage dumps in desperation for cash And many, many, many 
+    more! When you are told to press a key to roll,  you can press 
+    question mark (dots 1, 4, 5, 6) for a list of commands, or  hit 
+    z-chord to exit or save your current game to a file. If you save a  
+    game to a file which already exists, the previous contents of the file  
+    will be destroyed. So, I suggest using a filename ending in .got or  
+    something else which will distinguish it from other files of more  
+    importance. When asked for player's names at the beginning, press 
+    e-chord  (leaving the name blank) to fill the remaining player slots 
+    with computer  opponents. Sound interesting enough? Try this one 
+    today!
+
+                                     
+                                                                          
+                                   Hack
+
+     
+     The long awaited Hack has been created! In this game, you start off  
+as a BNS Classic with only 300 KB of RAM. But, by defeating other note  
+takers, your unit will increase in memory, and weaponry! Along with  
+hacking other note takers, you can search the Internet for hacking advice,  
+talk to other hackers, update your note taker with disks that you find,  
+and more! You must fight a level master at the end of every level; a  
+really mean note taker! If you manage to hack this note taker, you beat  
+
+the level, and your model is upgraded. There are five levels, but they are  
+not easy. From the main menu, you can press g to go shopping, f to fight  
+an enemy, m if you think you're ready to battle the level master, s for  
+statistics, or i to visit the hacker's inn! After you win a fight, you are  
+given some money, and if you "super hacked" your opponent (which is a  
+random thing) you will also get a disk from which you can increase your  
+note taker's capabilities. When you go shopping, you can purchase RAM  
+upgrades, macros, viruses, warm and cold resets, even unit melters;  
+anything that will allow you to hack the life out of your opponent! Very  
+fun and challenging!
+
+                                     
+                                                                          
+                                   Word
+
+     
+     Until now, I've skipped over a very popular game type--fun,  
+educational word games. Word is just that; many fun word games in one!  
+When you run the game, you will be presented with a menu. Simply select  
+the letter of the game you want. Word scrambler, the first game, is a fun  
+game where a word is entered by the first player, scrambled by the note  
+taker, and presented to the other player in scrambled form. That player  
+must then think of what the original word was by going through possible  
+combinations in his head. This can be a two player game, but also a one  
+player game. For a one player game, when asked for the word, type a period  
+and then the filename (more on this later). The next game, Hang Guy, is  
+just like the classic Hangman game--a word is entered or selected from a  
+file, and the other player has a set number of guesses in which to figure  
+out the word. Again, this can be a one or two player game by using a file  
+containing the words for one player. The next game, Memory, is similar to  
+the Concentration game show. The note taker randomly places two sets of  
+twelve prizes on a twenty-four square board, and you have to pair up the  
+two matching prizes by selecting the corresponding numbers. Next, we've  
+got a game called Word Tower. If you select a one player game, the words  
+are retrieved from the specified file. First, a word is retrieved and you  
+have to type in what that word is. Then, another word is retrieved, and  
+you have to enter the first word and the second word. A third word is  
+taken from the file, and you now have to recite all three. This pattern  
+continues until you can no longer remember all of the words, and you get  
+one wrong. This game is almost identical in two player mode, except the  
+players enter the words, and they are not retrieved from a file. Also, I  
+have created a game called Quickword, which is strictly a two player game.  
+When you select it, you enter the file where the words can be found. The  
+note taker randomly selects a word, and begins spelling it out to the two  
+players. The first person who knows what the word is presses his key (dot  
+1 for player one, dot 4 for player two) and types in his guess. If it is  
+right, he wins; if not, the other player wins. When a constant clicking  
+sound is heard, players should stop pressing any keys, because this means 
+that some one will be guessing the word, or that no one can guess anymore  
+(the entire word has been spelled out). Finally, deduction is a game where  
+you try to guess the pattern of letters which the note taker has selected.  
+First, you'll be asked for the number of letters you want to use. So, for  
+example, if you enter 10, the letters a through j will be used. The  
+maximum you can enter is 26 for the entire alphabet. Next, you'll have to  
+enter the word length, and finally, the number of players. You will then  
+be asked to type in your guess. Let us say that you type in abcde for your  
+guess. If any of those letters are in the correct spot in the sequence of  
+letters, you will be told so. Continue guessing, eliminating letters and  
+combinations, until you come up with the correct combination. The maximum  
+word length in any game which uses words is thirty characters (this also  
+refers to words in a file). In Word Tower, if thirty words are correctly  
+identified, the game ends and is considered a tie in two player mode or a  
+win in one player mode. Whenever you want to retrieve words from a file,  
+you will have to enter a filename. All word file databases end with the  
+extension .wds. I have included three small databases: sports.wds,  
+general.wds, and computer.wds. So, if you want to use the sports database,  
+just enter the filename as sports, because .wds is inserted automatically  
+after the filename you enter. By quick examination, you'll realize that  
+the format of a word database is simple: the first line is the total  
+number of words in the file, and subsequent lines contain one word per  
+line.
+
+                                     
+                                                                          
+                                  Races
+
+     
+     The Races is a horse racing simulation. The point of the game is to  
+bet on the horse you think will win, but also taking odds into 
+consideration. For instance, if a horse has five to one odds, he will have  
+less of a chance to win against one with one to one odds but will pay more  
+if he wins. In the text game style, whenever a horse moves, his number is  
+spoken. Similarly, the volume game style speaks the horses number every  
+time he moves at the respective volume according to how far he has moved.  
+The sound mode plays a different sound for every horse, whenever a  
+specific horse moves. This game can be played by one to four players, and  
+you can set it to play until a certain amount of money is reached by a  
+player, or until some one bets correctly a certain number of times.
+
+                                     
+                                                                          
+                                  Click
+
+     
+     Watch out! The clicks are coming! It's wave after wave of action in  
+Click Invaders; 100 waves in all and five difficulties! The object of the  
+game may seem easy and childish, but I assure you, you will not be  
+thinking that when you get to a high enough wave. Let's take you through  
+wave 1; the first wave you play when you enter the easy zone of the game.  
+Clicks will begin to be heard, starting at a low volume, and increasing in  
+volume on every click. Once ten clicks have been heard, hit spacebar. You  
+will then move on to wave 2, which is faster than wave 1. To pass this  
+one, again hit spacebar after the tenth click. If you do not press  
+spacebar there, you will notice that the game cycles back to the first  
+click at the lowest volume. You do not lose a life when this happens early  
+on in the game, but later you will. Once you get high enough, you will  
+have to press space at different times. Wave 16, for example, produces 
+twelve clicks before cycling back to the first one. So, after twelve  
+clicks have been produced, hit space. Starting from this level, if you let  
+the clicks cycle back to the lowest volume, you lose a life. However,  
+since different sets of waves produce different numbers of clicks, this  
+may be a good strategy to determine the amount of clicks you are waiting  
+for. Also realize that when levels get really fast, it is necessary to  
+press the spacebar immediately on the correct click. Since the key is  
+recognized when it is released, my strategy is to press the spacebar right  
+before the right click is produced, so by the time you release the key,  
+the click has just been heard. Strategy is everything! You can create your  
+own Click Invaders games also. Create a computer braille file ending in  
+.clk: the first line is the number of waves in the file, and the next line  
+is how many lives the user starts with. The third line will contain the  
+number of waves which will have the characteristics you set for them in  
+the following lines. You are basically grouping waves, as I did in the  
+game, which have similar characteristics, as this saves you lots of  
+typing. On the next line, place the number of clicks which must be sounded  
+before the user should press space to pass the wave. Place the letter r  
+before the number for the program to generate a random number of clicks  
+from 1 to that number. The next line contains a 1 or a 0: a 0 means the  
+clicks start at a low volume and get louder, a 1 reverses this pattern as  
+the clicks start high and descend in volume. The next line contains the  
+amount to delay after every click (30 is a second); to disallow delaying,  
+enter 0. Following this line, enter the amount of lives a user loses if he  
+presses space at the incorrect time. The next line holds the percent  
+chance (0 to 100) of starting the clicks over again from the start of the  
+cycle. The final line of the current group is the number of lives a user  
+loses when the clicks cycle back to the beginning. You may repeat this  
+process with another block of waves, until you have made the amount of  
+waves you specified on the first line. The last line contains a  
+congratulations message for the user if he beats the game. When trying to  
+load a home made file into the game, do not specify a file extension, as  
+.clk is provided.
+
+                                     
+                                                                          
+                                  Trivia
+
+     
+     How much do you know about a given topic? Find out by playing trivia!  
+All questions for this game come from external question files all ending  
+in .trv. There is one included now called math.trv. To create your own  
+trivia files, create a computer braille file ending in .trv. The first  
+line includes the number of questions, and the next line includes the  
+number of possible answers for the user to choose from for every question  
+(the maximum is nine). Next, you will enter the question information. The  
+format of this is the actual question followed on subsequent lines by the  
+possible answers and finally the number of the correct answer (1 to 9).  
+This game will be further developed in the future.
+
+                                     
+                                                                          
+                                   DHL
+
+     
+     Dan's Hockey League is a killer hockey game for the Blazie notetakers 
+in which you test your skill against a computer opponent. There are five 
+difficulty levels to choose from, ranging from super easy to almost 
+impossible. When you start the game, you'll be asked for some information 
+about your team. After you name the team and the players that will be on 
+the team, you'll have to distribute point values to players. The number of 
+points you give the player reflects how accurate the player passes the 
+puck, or in the case of a goalie, how well he can save the puck. The 
+maximum you can give one player is ten points. Once the game starts, you 
+can choose to pass, shoot, move, or get stats. Passing the puck is 
+necessary to move up the ice, and thus increase your chance of shooting on 
+target. Moving allows you to skate around the ice, and disorient the other 
+team, thus increasing your chance of completing a pass. Shooting the puck 
+should only be attempted when close enough to the opponent's net, 
+otherwise the shot will most likely miss the target. Selecting info will 
+tell you how much time is remaining in the game, the score in the game, 
+and so on. Once you beat the computer on the first few difficulties, try 
+the harder ones. You'll be playing over and over again trying to beat the 
+artificially intelligent opponent!
+
+                                     
+                                     
+
+                                     
+                                 Pinball
+
+     
+     You no longer have to go to the arcades to play this one, cause now 
+it's right on your Blazie notetaker! This game cannot be played by Braille 
+Lite 40 users, because it relies entirely on sound. Descending tones 
+indicate how close the ball is to your flipper. When it gets close enough 
+to hit, press dot 1 if the ball is on the left side, and dot 4 if it is on 
+the right side. You can learn which side the ball is coming down by 
+pressing s when you start the game. If the ball is not close enough, your 
+flipper will do nothing, and it will keep falling closer and closer. When 
+you miss the ball, and a click is sounded, you lose that ball and a new 
+one begins to fall (you start with five). If the ball is hit perfectly 
+multiple times (meaning it was right at the lowest pitch), you get a 
+special bonus. Have fun!
+     
+                                     
+                                  Stock                                     
+
+     Ever wanted to buy and sell stocks, but didn't want to send your last 
+pay cheque up in flames? Now you can play a stock simulator on your Blazie 
+notetaker. When you run the stock simulator, you will be presented with a 
+menu allowing you to buy, sell, or list stock prices. Once you're done 
+your trading for the day, you can press "n" for the next day. Every day, 
+all of the stocks prices will increase or decrease, and the object of the 
+game is to see how much money you can end off with after thirty days!    
+     
+     If you have any comments, feature or new game requests, or questions,  
+email me. Just a few words of warning now. Do not use upper case letters  
+when answering prompts. Also, only use computer braille (dropped numbers  
+with no number signs for example). If I forgot to program a  quit command 
+for a certain game, just hit z chord a few times rapidly to  quit. While 
+playing arcade, point rally, recall, or any other game with  sound turned 
+on, I suggest turning off double speed if you have it. If you  try it with 
+double speed on, please email me with the results as I do not  have double 
+speed so could not test this. Please fill in the file called  answer.txt; 
+it is a short questionnaire which will let me know what I  should be doing 
+in future versions of the games. If you'd like to assist  at all in the 
+development of games, I urge you to send me home made arcade  or Click 
+Invaders levels, word databases, and trivia question databases.  My email 
+address is daniel_zingaro@hotmail.com so send me some feedback please! 
+Thanks  for reading and have fun!

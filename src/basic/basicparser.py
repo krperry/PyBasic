@@ -15,12 +15,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-from basictoken import BASICToken as Token
-from flowsignal import FlowSignal
+from basic.basictoken import BASICToken as Token
+from basic.flowsignal import FlowSignal
 import math
 import datetime
 import random
-from music import sound, click, beep
+from basic.music import sound, click, beep
 
 
 try:

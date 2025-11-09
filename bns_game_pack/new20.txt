@@ -1,0 +1,116 @@
+               What's New in Dan's Basic Games version 2.0?
+
+     Welcome to version 2.0, the fourth release of my games. This is a 
+major upgrade from version 1.6! You'll find some exciting new titles 
+included in this release which I have spent many months on. As always, 
+there are also some enhancements to existing games. I would like to take 
+this time to thank you, and every one else, who has donated. You people 
+are the one's that keep me programming with your comments and compliments 
+(well, ok, the criticisms also). Have fun, and have a Merry Christmas! (Oh 
+no! I forgot to make a Christmas game!)
+
+*Enhansements*
+
+     I optimized the code in battle a bit, added a few more instructions, 
+and added another stat (enemy's strongest hit) to the stats command. 
+Thanks to a suggestion from Stephen Clower, you now have the option of 
+fighting with verbose mode on or off. When on, the game functions just as 
+before. When off, fighting text is brought down to a minimum. Press v at 
+the weapon selection prompt to toggle the option off and on. You can also 
+press s while fighting to get "stats" on the fight (your power and enemy's 
+power). This is useful if you want to know how much power you or the enemy 
+has, and you've turned verbose mode off.
+     I moved the command to get instructions in ball from the actual game 
+into the first question (press i as before) because it slowed down the 
+game and was not used enough to be kept there. I also fixed some speech 
+problems with the instructions, and changed some of the code of the game. 
+Now, when it's the computer's turn, any key will get you information on 
+the game, so it is not necessary to press all six keys anymore. This also 
+benefits some people who were having trouble using this command. The x 
+command still exits the game, but user's who have problems using this can 
+just hit z-chord a few times as always to quit. I have added some new 
+functionality to the game also; you can now press d when you are asked if 
+you want to play against the computer to have the computer play more 
+difficultly. As a side note, I fixed the problem which created choppy 
+speech when a touch down was scored and sound was off.
+     Arcade.lev is now called levels.arc; I want to start having some 
+consistency with file extensions.
+
+*New Games*
+
+     New games? You bet! Enjoy!
+     I have created a new game called word.bas. Before I explain this one, 
+I want you to picture me sitting down to do a computer contest. As you may 
+know, computer programming contests (like the last one I took) are long, 
+frustrating, and very challenging. The contestants have to deal with any 
+errors they may get, and they have to develop there own reliable, fast 
+methods to solve problems. This game was an example of that. It may seem 
+like a simple game to make, but it is definitely the most challenging game 
+I have ever had to program. This game is actually a collection of fun, 
+entertaining, and educational word games. Currently there are six games: 
+word scrambler, hang guy, memory, word tower, quickword and deduction. All 
+applicable games can be set to one or two player mode, and can accept a 
+word from the user or read them from a database (there are three included 
+in the package). Please see games.txt for further information.
+     Thank goodness this one was a bit easier to program! I dreamed up 
+another new one; The Races (races.bas). This is a game where 1 to 4 
+players bet on horse races. It's only one page in size, but it's still 
+packed with features. For instance, there are three game styles, and two 
+different methods of claiming a winner. It's fun; try it! Remember to 
+check games.txt for game information.
+     Oh no! The clicks are coming! I have created a game called Click 
+
+Invaders. This game features 100 waves of action, five difficulty levels, 
+and all of the tricks I could think of to keep you playing. I made this 
+game roughly along a version of space invaders I played quite a long time 
+ago. The main point of the game is to press the spacebar when the click 
+sound reaches it's highest volume for that particular wave. If you press 
+spacebar at the correct time, you move to the next wave; if not, you lose 
+a life. The first 15 or so levels are nice and easy, and give you lots of 
+time to hit spacebar when the clicks have reached their highest volume. 
+But, by the time you get past wave 50, you won't believe how fast and 
+tricky the levels are and how many tricks I employed. If this game doesn't 
+sound fun yet, please try it; I'm almost positive you'll be playing this 
+one nonstop! Check games.txt for complete game info.
+     Sim.bas has been deleted. I just got annoyed and pretty well 
+embarrassed with that slow and useless program, for which I had lost the 
+source code anyway. Don't panic though; recall.bas has been included to 
+replace it. It has many more options (including two game styles and a ton 
+of difficulty levels), is much faster, plays nicer sounds (no more head 
+aches), increases the game speed as you play, and, yes, one of the game 
+styles will even work on the blt40! The new game style, to accompany the 
+classic Simon style, is one where you memorize and repeat a pattern of 
+numbers, and not sounds at all! Even though there is so much new 
+functionality, the game is still only one page in size! Games.txt has 
+further details.
+     Yet another new one? This time it's a trivia game; trivia.bas. It's 
+only one page, but that's because all of it's data comes from external 
+question files. This means that you can create your own files with however 
+many questions you like, with up to nine choices for the user to guess 
+from. This game will become more fun when I create or receive more 
+question databases. Currently there is just one trivia question file, 
+math.trv. This game is in it's early stage of development, so features are 
+currently limited.
+
+                                     
+                               *Coming Up*
+
+     You should expect the next version (2.2) to be a minor release; I'll 
+call it a clean up version. I want to kill all of the bugs that may have 
+snuck in in this version, as well as add any small features that I find 
+would be useful. The file handling in word.bas is very sloppy, and the 
+code for some games could use a little optimizing. I want to make more 
+databases for word, and of course, increase the existing ones. There is 
+currently no sample level file for click invaders; I plan on making one of 
+these also. I will make more trivia question files, and add more to the 
+math one. Trivia.bas, as I previously said, is in it's early stages of 
+development, and I plan to add lots more features to it: a command to 
+repeat the questions and answers, additional types of quizzes (true and 
+false, complete answer) and so on. If I think it is necessary, I will 
+create a utility.bas program which will automate the creation of word 
+databases, arcade levels, click invader games, trivia databases, etc. I 
+can't give you a release date for the next version, as I don't know how 
+much time I will have. My long term plans include creating more games for 
+Word, a baseball or hockey game, and a few surprises (hmmm, what could Dan 
+be thinking of now?)! Please email me at daniel_zingaro@hotmail.com with  
+questions or comments.

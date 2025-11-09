@@ -34,7 +34,7 @@ Column: 12 Category: UNSIGNEDFLOAT Lexeme: 3.45
 Column: 12 Category: STRING Lexeme: HELLO
 """
 
-from basictoken import BASICToken as Token
+from basic.basictoken import BASICToken as Token
 
 
 class Lexer:
@@ -173,7 +173,7 @@ class Lexer:
 
             # We do not recognise this token
             elif c != '':
-                raise SyntaxError('Syntax error')
+                raise SyntaxError(f'Syntax error "{stmt}"')
 
             # Append the new token to the list
             tokenlist.append(token)

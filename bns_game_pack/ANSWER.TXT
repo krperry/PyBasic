@@ -1,0 +1,69 @@
+     Your answers count!
+     This file contains a short questionnaire which shouldn't take more 
+than a few minutes. I would appreciate if you would answer the following 
+questions. Your answers will indicate to me which games I should be making 
+in the future, important things to consider when making a game, and stuff 
+like that. When answering, use a standard text editor like DOS's edit 
+command or Windows note pad. Please answer in the blank lines provided, 
+and email the modified file to daniel_zingaro@hotmail.com.
+
+                                     
+                                  Name:
+                                     
+
+Age:
+Please list your three favourite games (in order from first to third 
+  favourite if you could):
+
+     
+     
+     
+     
+     Please list the three games you dislike the most (least favourite to 
+third least favourite if you could):
+     
+     
+     
+     
+     If you have double speed, which games seem to work with it on?
+     
+     
+     Again if you have double speed, which games do not work (or work 
+differently) with it on? Explain the results.
+     
+     
+     
+     
+     If you have flash memory on your unit, how do the games operate when 
+stored on this media?
+     
+     
+     
+     Give a rating from 1 to 5 on how much you enjoy playing the following 
+types of games. Your rating should not be on my games themselves which fit 
+in to a certain category, but the category itself.
+     Classic (mine for example):
+
+two players (chase for example):
+board games (gotcha for example):
+arcade games (arcade for example):
+fighting games (battle or hack for example):
+Card games (blackjack for example):
+Text adventures:
+Sports games (ball for example):
+Games versus the computer (like in Gotcha or Ball):
+
+     The remainder of this file can be used to write comments to me. What 
+do you think of the overall game pack I have made? Which games should be 
+added or updated in the future? Are you satisfied with the games 
+performance on your note taker (for instance, speed problems)? Please make 
+honest comments. Thanks for taking the time to fill out the questionnaire.
+     
+
+     
+     
+     
+     
+     
+     
+     

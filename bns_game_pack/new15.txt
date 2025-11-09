@@ -1,0 +1,67 @@
+     What's new In Dan's Basic Games v1.5?
+     Are you ready to play v1.5 of Dans Basic Games? In this release, I 
+centered on bug fixes, and small improvements to the games I have already 
+made. But, there are some great new games also! I would like to thank you 
+once again for donating and hope that you will enjoy playing this release.
+     *ENHANCEMENTS*
+     Many enhancements have been made to this release--compliments to the 
+Bnsbasic list subscribers for many of these! My personal thanks to Tom Ley 
+and Aman Singer for pointing out and giving solutions to the blt40 sound 
+problem. Mine, ball, hack, arcade, gotcha, and battle now all work with 
+the Braille Lite 40 units, so have fun! Thanks again to Tom Ley for 
+allowing me to use true Blazie note taker names in Hack--I appreciate 
+that.
+     First of all, in Battle, I have added a congratulations message and 
+sound after you beat the game, added another starting choice (more power), 
+fixed a math problem when getting perfect wins, added two enemies, added 
+an option to turn sound on or off, and added another weapon selection! In 
+addition, I have fixed a problem where fights would end and no one was 
+dead. Also, you can press s from the weapon selection prompt to get stats 
+about the last fight.
+     In Ball, you can now play against the computer, and while it's his 
+turn, you can press dots 1-2-3-4-5-6 to get info or x to exit. I have also 
+added some key trapping routines so your score and other important prompts 
+are not missed as much. Finally, I have added an option to turn sound on 
+or off.
+     In buried treasure, I have added six  more fun games (including 
+paper, rock, scissors, 21, darts, and more) plus a periodic bonus round!
+     In an attempt to gain speed in Mine, I rewrote tons of it's code.  I 
+fixed a bomb calculation error where one more bomb than asked for would be 
+placed. When asked for the number of bombs, you can now press e-chord for 
+a default of 10. While playing, you can press a chorded dropped number to 
+move to the number's column. Finally, there is now an option of having 
+sound or not.
+
+                                     
+                               *New Games*
+
+     The long awaited games are ready--so enjoy!
+     I have added a surprise game called gotcha--which I believe is the 
+first board game to be created for the note takers. Up to 4 players can 
+play, in any mixture of human and computer players. You can save the game 
+to a file and restore it later. You play on a huge board, there are many 
+events which can occur, and you can even select the length of the game! 
+... And that's just the beginning. Examine the file games.txt for a 
+complete description, along with playing instructions.
+     The much awaited game called Hack has been created, and included in 
+this release. You start as a BNS classic, and fight through five intense 
+levels of note takers until you reach your ultimate destiny, the blt40! 
+Visit the hacker's inn, search the Internet for hacking advice, talk to 
+other hackers, add memory and better weapons to your note taker by using 
+update disks which you can find along the way or with money you get from 
+destroying other note takers. Every level has a level master--a real mean 
+note taker. Destroy your enemy using macros, viruses, cold resets--even 
+unit melters! To win this one, you'll have to beat the meanest, toughest 
+note taker ever--the Powerbraille! You can view your stats (memory, model, 
+weapons, disks), and if your in a desperate situation, you can even 
+attempt to run away from your opponent note taker! Examine games.txt for 
+complete information and playing instructions.
+     My first arcade style game has been included--and it's called arcade! 
+It has twenty levels built in, with passwords given every few levels. You 
+can even create your own levels! This one is furiously fast, and your 
+
+fingers will be flying like crazy around those keys! The farther you get, 
+the more difficult and frantic the levels become. Examine the file 
+games.txt for a complete description and playing instructions.
+     If you have any questions or comments, please email me at 
+daniel_zingaro@hotmail.com and let me know!

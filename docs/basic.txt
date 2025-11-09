@@ -1,0 +1,1547 @@
+                 Basic Interpreter User's manual
+
+February 25, 1996
+
+Introduction
+
+     Welcome to the Basic interpreter for the Braille 'N Speak,
+Type 'N Speak, and Braille Lite.  This package allows you to
+write Basic programs for your Braille 'N Speak, Type 'N Speak, or
+Braille Lite.
+
+     The Basic Interpreter is similar, but not identical, to both
+GWBasic and Basica for the IBM and compatible family of computers,
+and Applesoft Basic for the Apple II family of computers.  
+
+     The Basic interpreter consists of two programs.  The first is
+called compile.bns, and the second is called run.bns.  The
+compile.bns program takes a standard textfile containing the source
+code for a Basic program, and converts it into a file with a .bas
+extension.  The run.bns program is used to run the .bas file
+created by the compile.bns program.
+
+
+About This Manual
+
+     This manual is designed to give you an overview of the Basic
+Interpreter's commands.  It is not designed to teach you how to
+program in Basic.
+
+     If you wish to learn how to write Basic programs, you might
+try calling your Talking Book or Braille library.  there are
+several books available in Braille and in recorded format that
+teach Basic Programming.
+
+     Recording for the Blind has a wealth of books on this topic. 
+Here are a couple that you may wish to order:
+
+Programming in Basic
+   RFB book number-- BQ579
+
+Introduction to Computer Programming with The Basic Language
+   RFB Book Number-- BK232
+
+     Another great way to learn how to write Basic programs is to
+look at the source code for the numerous basic programs included
+with this package.  I have written many of these programs, but many
+were written by various people using the interpreter.  The source
+code for these programs is contained in files with a .src
+extension.
+
+     This manual begins with some information about how to create
+and run a basic program.  Next comes a command summary.  this is an
+alphabetical list of the interpreter's fifty-two commands, along
+with a description of each, and examples of its use.  Next comes a
+list of all the functions which are built into the interpreter,
+(things like finding the length of strings, computing the absolute
+value of a number, etc.)  Next comes a list of all the possible
+errors and their codes.  Finally, we have a few technical notes.
+
+
+
+Creating and Running a Basic Program
+
+     In order to use the interpreter, you must have first
+downloaded both the compile.bns and run.bns programs into your
+unit.  This can be done with the Blazie Engeneering diskdrive, or
+you can download the programs from a PC using a tellecommunications
+program such as Procomm or Telix.
+
+     Next, you must create a file in the Braille 'N Speak, Type 'N
+Speak, or Braille Lite which contains the source code for a Basic
+program.  the file can be written in either computer Braille or
+Grade Two Braille.
+
+     Next, type o-chord x.  Your unit will ask you to "enter
+program to execute."  Type compile, followed by a space, followed
+by the name of the file containing the Basic source code.  An
+extension of .src will be assumed if none is supplied.  For
+example, to compile a program called test.src, you would type:
+
+o-chord x
+compile test
+
+     Your unit will say "compiling," and the program will be
+compiled.  If no errors occur during compilation, your unit will
+say "done," and the compile.bns program will create a file in your
+unit with the same name as the file containing the source code,
+except that the new file will have a .bas extension.
+
+     You can abort the compilation at any time by pressing z-chord
+on the Braille 'N Speak or Braille Lite, or the esc. key on the
+Type 'N Speak.
+
+     If the source code is in the currently open file, you can
+type:
+
+o-chord x
+compile /c
+
+The /c switch tells the compile program to compile the currently
+open file.
+
+     Braille Lite users can force the compile.bns program to
+display the progress of the compilation, by following the file name
+with the /d switch.
+
+example:
+
+o-chord x
+compile test /c
+
+     This example will compile a program called test.src, and will
+display the progress of the compilation on the Braille Lite's
+display.
+
+To run the program you have compiled, type o-chord X.  Then type
+run, followed by a space, followed by the name of the program to
+run.  The .bas extension is assumed, so you need not include it. 
+For example, to run a program called test.bas, you would type:
+
+o-chord x
+run test
+
+     You can abort the execution of a Basic program at any time by
+pressing z-chord on the Braille 'N Speak or Braille Lite, or the
+esc. key on the Type 'N Speak.
+
+
+
+
+
+     The following is a breef description of each Basic command,
+its syntax, limitations, and an example of its use.
+
+
+allcaps
+
+     The allcaps command acts just like the caps-lock key on a PC
+keyboard.  It expects no arguments.  The allcaps command causes all
+text which is inputted through the keyboard to be converted to
+upper-case.  It defaults to off when any basic program begins.  The
+allcaps command toggles this feature on and off.  The allcaps
+feature does not affect keyboard input outside of a Basic program.
+
+
+beep
+
+     The beep command produces a bell sound from the speaker.  It
+expects no arguments.
+
+
+braille
+
+
+     The braille command is a command which was designed specificly
+for the Braille Lite.  It works the same as does the print command,
+except that it only displays the text on the Braille display, and
+does not speak it.  This command does nothing on the Braille 'N
+Speak or Type 'N Speak.
+
+example:
+
+braille "Hi"
+   displays the word hi on the Braille Lite display
+Braille 1+2
+   displays the sum of 1 and 2 on the Braille Lite display
+
+     The braille comman will accept multiple arguments.  Thus, the
+following command syntax is legal.
+
+braile "hello", "This is a test."
+
+
+clear
+
+     The clear command erases all variable data.  It expects no
+arguments.
+
+
+click
+
+The click command clicks the speaker.  It expects no arguments.
+
+
+close
+
+     The close command is used to close a previously opened file. 
+After the close command, the number of the file should be
+specified.
+
+example:
+
+close 1
+   Closes the file associated with file number 1
+close i
+   Close file whose number is contained in the variable i
+
+     The close command will accept multiple arguments.  Thus, the
+following command syntax is legal.
+
+close 1, 2, 3
+
+     Note that if a program attempts to close a file which is not
+already open, the program will stop with a "file not open" error,
+or if error trapping has been enabled with an "on error" statement,
+the err variable will be set to 21.  If the file number specified
+is not a 1, 2, or 3, the program will stop with an "invalid file
+number" error, or the err variable will be set to 18.
+
+
+create
+
+     The create command creates a file in the Braille 'N Speak,
+Type 'N Speak, or Braille Lite.  It expects two arguments separated
+by commas.  The first is the file number, which can be 1, 2, or 3. 
+This number is used to tell the interpreter which file to access
+when reading and writing.  The second argument is a character
+string containing the name of
+the file to create.
+
+example:
+
+create 1,"test.dat"
+   creates a file called test.dat, this file is then associated
+   with file number 1.
+create 1,a$
+   Creates a file whose name is contained in a variable called a$, 
+   and assigns it to file number 1
+
+     The create command will accept multiple sets of arguments. 
+Thus, the following command syntax is legal.
+
+create 1,"test1.dat",2,"test2.dat"
+
+     Note that if the file can't be created, the program will stop
+with a "can't create file" error.  If error trapping has been
+enabled with an "on error" statement, the err variable will be set
+to 23.  If the file name given is bad,the program will hault with
+a "bad file name" error, or the err variable will be set to 19.  If
+the specified file number is not 1, 2, or 3, the program will stop
+with an "invallid file number" error, or err will be set to 18.
+
+Warning!!! If the file already exists, it's contents will be
+destroyed!
+
+
+data
+
+     The data command defines data which can then be read by the
+read command.  The individual data elements should be separated by
+commas.
+
+example:
+
+data "cat", "dog", "fish"
+   defines three data elements which are character strings
+data 22, 23, 29
+   defines three data elements which are numeric values
+
+     Data statements may appear anywhere in a program.  They do not
+need to preceed the read statements.  All data statements are
+processed before any Basic program is run.
+
+
+delete
+
+     the delete command deletes a file in the Braille 'N Speak,
+Type 'N Speak, or Braille Lite.  It expects one argument, which is
+a character string containing the name of the file to delete.
+
+example:
+
+delete "test.dat"
+   deletes a file called test.dat
+delete a$
+   deletes a file whose name is contained in the variable a$
+
+     The delete command will accept multiple arguments.  thus, the
+following command syntax is legal.
+
+delete "test1.dat", "test2.dat", "test3.dat"
+
+     If the file can't be found, the program will stop with a "file
+not found" error, or if error trapping has been enabled with an "on
+error" statement, the err variable will be set to 12.  If the file
+name is bad, the program will stop with a "bad file name" error, or
+the err variable will be set to 19.  If the file is
+write-protected, the program will stop with a "file is
+write-protected" error, or the err variable will be set to 25.
+
+
+dim
+
+     The dim command sets up arrays of variables.  The name of the
+array can be either the name of a character string variable or the
+name of a numeric variable.  This will determine whether the array
+is an array of numeric values, or an array of character strings. 
+The dimensions of the array follow its name in parentheses.
+
+examples:
+
+dim a$(200)
+   sets up an array of 200 character strings called a$
+dim i(100)
+   sets up an array of 100 numeric values called i
+
+     Multi-dimensional arrays can be defined by separating the
+dimensions of the array with commas.
+
+example:
+
+dim a(20, 20)
+   sets up an array of twenty by twenty numeric values called a
+
+     The dim command will accept multiple sets of arguments.  Thus,
+the following command syntax is legal.
+
+dim a$(100), b(200), c$(9)
+
+     To access an element of an array, treat it as you would a
+normal variable.  Simply follow the array name with the appropriate
+subscript in parentheses.  Therefore, to access the thirteenth
+element of an array called a, a(13) would be used.
+
+     For multi-dimensional arrays, multiple subscripts are needed
+to access an element of the array.  Simply follow the array name by
+the subscripts, separated by commas, in parentheses.
+
+example:
+
+a(20, 20)
+
+
+end
+
+     The end command is used to signify the end of a program.  It
+expects no arguments.  the end command is not necessary if the
+program ends at the end of the file.
+
+
+fget
+
+     The fget command gets a character from a file and puts it in
+the specified character string.  It expects two arguments.  the
+first is the file number (1, 2, or 3), and the second is the name
+of the variable where the character should be put.  The variable
+must be a character string variable (end with a $ character). 
+Otherwise, the program will stop with a "type mismatch error", or
+if error trapping has been enabled with an "on error" statement,
+the err variable will be set to 3.
+
+example:
+
+fget 1,c$
+   gets a character from the file associated with file number 1,
+   and puts it in the character string c$.  Note that this example
+   assumes that a file has already been associated with the file
+   number 1 with an open or create command.
+
+     The fget command will accept multiple sets of arguments. 
+Thus, the following command syntax is legal.
+
+fget 1,c$, 2,d$
+
+     If the file number isn't 1, 2, or 3, the program will hault
+with an "invallid file number" error, or if error trapping has been
+enabled with an "on error" statement, the err variable will be set
+to 18.  If the file is not open, the program will stop with a "file
+not open" error, or the err variable will be set to 21.  If the end
+of the file has been reached, then the program will stop with an
+"end of file" error, or the err variable will be set to 24.
+
+
+finput
+
+     The finput command gets a line of text from a file.  It then
+puts the text in the specified variable.  1The finput command
+expects two arguments.  The first is the file number (1, 2, or 3),
+and the second is the name of the variable in which to put the
+inputted text.  These two arguments should be separated by a comma.
+
+If the specified variable name is a character string, then the
+inputted text will be stored as a character string.  If not, then
+it will be stored as a numeric value.
+
+examples:
+
+finput 1,a$
+   Gets a character string from the file associated with file
+   number 1, and puts it in the variable a$
+finput 1,i
+   gets a number from the file specified by file number 1, and puts
+   it in the variable i
+
+     The finput command will accept multiple sets of arguments. 
+Thus, the following command syntax is legal.
+
+finput 1,a$, 2,i
+
+     Note that the finput command assumes that the file number has
+already been assigned to a file using either an open or create
+command.  If the specified file number has not been assigned to a
+file, the program will stop with a "file not open" error, or if
+error trapping has been enabled with an "on error" statement, the
+err variable will be set to 21.  If the end of the file has been
+reached, the program will stop with an "end of file" error, or the
+err variable will be set to 24.
+
+
+for next loops
+
+     The for next structure allows for next loops to be defined. 
+The for command is followed by a variable name.  This variable will
+be the accumulator.  The variable name is followed by an equals
+sign, followed by a starting value for the variable.  Next is the
+word to, and finally, the ending value for the loop.
+
+example:
+
+for a = 1 to 10
+   sets up a as a counter which starts at 1, and ends at 10
+
+     Unless otherwise specified, the counter will be incrimented by
+1 each time the loop repeats.  However, a step size can be
+specified by following the end value with the word step, and then
+giving the step value.
+
+example:
+
+for a = 2 to 10 step 2
+   a counts from 2 to 10 in incriments of 2
+
+     Note that counting backwards must be accomplished through the
+use of the step command.  Thus, in order to count backwards from 10
+to 1, the following command could be used.
+
+for a = 10 to 1 step -1
+
+     At the end of the loop, there must be a next statement.  This
+tells the program to jump back to the top of the loop.  Variable
+names can be specified, but are not necessary.  It is a good idea
+for program readability however.  Every for must have an
+accompanying next.  Therefore, the following program is an example
+of a program that is incorrect.
+
+10 for i = 1 to 3
+20 for e = 1 to 3
+30 next i
+
+     Notice that the loop beginning in line 20, the loop using e as
+its counter, is never re-iterated.  this will result in the
+compile.bns program reporting a "for without next" error in line
+20.
+
+     Note that while a variable may be specified for the ending
+value of the loop, the ending value of the loop can't change once
+the loop has been started.  Consider the following program:
+
+10 e = 10
+20 for i = 1 to e
+30 e = 2
+40 next i
+
+     This program first sets the e variable to 10.  It then starts
+a for next loop, using i as its counter, which starts at one and
+ends at e (which is equal to 10 at this point.)  Line thirty
+changes the value of e to 2, but this loop will still execute ten
+times, because when the loop started, the value of e was 10.  
+
+
+fprint
+
+     The fprint command prints information to the end of a file. 
+The file must first be opened or created with the open or create
+command.  When you open or create the file, you will assign it a
+number, either a 1, 2, or 3.  To print to the file, you must follow
+the fprint command with the file number, a comma, and then the text
+to print.
+
+example program
+
+10 open 1,"test.dat"
+20 fprint 1,"Hello."
+30 close 1
+40 end
+
+     Line 10 of the above program opens a file called test.dat, and
+gives it the file number of 1.  Line 20 then prints the message
+"Hello." to that file.  Line thirty closes the file, and line 40
+ends the program.
+
+     Note that the fprint command will accept multiple sets of
+arguments.  Therefore, the following command syntax is legal.
+
+fprint 1,"hello",2,"testing."
+
+     Note that if the file number given hasn't been assigned to a
+file, the program will stop with a "File not open" error, or if
+error trapping has been enabled with an "on error" statement, the
+err variable will be set to 21.  If the file number given is not a
+1, 2, or 3, the program will stop with an "invallid file number"
+error, or the err variable will be set to 18.  If the file is
+write-protected, the program will hault with a "file is
+write-protected" error, or the err variable will be set to 25.
+
+
+Get
+
+     The get command gets one keystroke from the keyboard, and puts
+it in the specified variable.  The variable must be a character
+string, otherwise, the interpreter will return a type mismatch
+error.
+
+Example:
+
+get c$
+   gets a keystroke and puts it in a variable called c$
+
+     Note that on the Braille 'N Speak and Braille Lite, chord
+characters are returned as a string of two characters.  the first
+character is the percent sign, and the second character is the
+upper-case letter value of the non-chorded character.
+
+examples:
+
+g-chord = "%G"
+d-chord = "%D"
+dot 3-chord = "%'"
+
+     The get command will accept multiple arguments.  Thus, the
+following command syntax is legal.
+
+get a$, b$, c$
+
+
+gosub
+
+     The gosub command calls a routine beginning at the specified
+line.  When the interpreter finds a return statement, it returns to
+the place in the program just after the gosub command.
+
+example:
+
+gosub 3000
+   calls a subroutine at line 3000
+
+     The gosub command will accept multiple arguments.  thus, the
+following command syntax is legal.
+
+gosub 100,200,300
+
+
+goto
+
+     The goto command makes the current program jump to the
+specified line number, and begin running at that point.
+
+example:
+
+goto 1000
+   makes program move to line 1000 and begins running the program 
+   there
+
+
+if then else
+
+     The if then else structure allows programs to make decisions. 
+If the comparison following the if statement is true, then the rest
+of that program line will be executed.  If not, that program line
+is skipped.  If the comparison is false, the interpreter will
+execute the line following an else statement if it exists.
+
+example program:
+
+10 print "What's your age?"
+20 input age
+30 if age > 65 then print "You are a senior citizen."
+40 else print "You're not a senior citizen."
+50 end
+
+   if the user enters an age over 65, then the argument following
+   the if statement in line 30 is true, and therefore, the rest of 
+   that line is executed, which tells the user that he/she is a
+   senior citizen.  If the user enters an age less than 65, then
+   the expression following the if statement is false, and
+   therefore, the rest of line 30 is not executed.  However,
+   because the expression following the if is false, the else
+   statement in line 40 is executed.
+
+
+input
+
+
+     The input command inputs a line of text, and puts its value in
+the specified variable.  If a character string name is given, then
+the user's input is stored as a character string.  If the variable
+name is that of a numeric variable, then the input is stored as a
+numeric value.  User input is terminated with any chord key on the
+Braille 'N Speak or Braille Lite, and the enter key on the Type 'N
+Speak.
+
+examples:
+
+input a$
+   gets user input and stores it as a character string in a$
+input i
+   gets user input and stores it as a number in i
+   if user input is a character string, then i receives the value 
+   of zero
+
+     The input command will accept multiple arguments.  thus, the
+following command syntax is legal.
+
+input a, i, c$
+
+     Note that you can define an input prompt when calling the
+input command.  Any text contained in quotation marks which is
+passed to the input command is spoken.
+
+example:
+
+input "enter your name.", name$
+   First says "Enter your name.", then gets input and puts it in  
+ name$
+
+
+let
+
+     The let command is an extraneous command.  It is used in some
+programs however.  It is used to assign a value to a variable.  It
+is not necessary, you may omit it.
+
+examples
+
+let a = 3
+   assigns the value of 3 to variable a
+   could also be written:
+      a = 3
+
+let a$ = "hello"
+   assigns character string "hello" to variable a$
+   could also be written:
+      a$ = "hello"
+
+
+lf
+
+
+     The lf command is used to turn on and off return line-feed
+pairs.  It expects no arguments.  This feature defaults to off,
+which means that normally, when text is outputted to a file or to
+the serial port, each line of text will end with a return character
+only.  If you issue an lf command, then any line of text outputted
+to the serial port or to a file will end with a return line-feed
+pair.  The lf command toggles this feature on and off.  
+
+
+off
+
+     The off command turns off the speech power in the Braille 'N
+Speak, Type 'N Speak, or Braille Lite.  It expects no arguments. 
+The power is turned back on the next time that something is spoken,
+or a sound is made.
+
+
+on
+
+     the on command is used to make decisions based on the value of
+a variable.  The on command is followed by the name of a numeric
+variable, and then by a command with several arguments.  If the
+value of the specified variable is 1, then the first argument to
+the following command is executed, if it is equal to 2, then the
+second argument is executed, and so on.
+
+example program:
+
+10 print "Enter your choice, 1, 2, or 3."
+20 input choice
+30 on choice goto 100, 200, 300
+40 end
+100 print "The user selected choice number one."
+110 end
+200 print "the user selected choice number two."
+210 end
+300 print "the user selected choice number three."
+310 end
+
+     If the user enters a 1, then the value of choice becomes 1,
+and the first argument of the goto statement (100) is executed.  If
+the user enters 2, then the value of choice becomes 2, and the
+second argument of the goto statement (200) is executed.  If the
+user enters 3, then the value of choice becomes 3, and the third
+argument of the goto (300) is executed.  the on statement in line
+30 could be written the long way as:
+
+30 if choice = 1 then 100
+32 if choice = 2 then 200
+34 if choice = 3 then 300
+
+     Another use of the on command is to provide error trapping. 
+If the on command is followed by the word error, it will do the
+statement after the word error if any error occurs.
+
+example:
+
+on error goto 100
+   If an error occurs, the program wil "goto line 100"
+
+     Also, if an "on error" statement has been executed, if an
+error occurs, then a variable called err will be assigned the error
+code of the error.
+
+sample program:
+
+10 on error goto 100
+20 open 8,"test.dat"
+30 end
+100 print "Error number " err " has occurred."
+110 end
+
+     Line ten turns error trapping on with an "on error" statement,
+and determines that if an error occurs, the program should go to
+line 100.  Line 20 attempts to open a file, and assign it to a file
+number of 8, which is an invallid file number.  this results in an
+error, and therefore, the program jumps to line 100.  The err
+variable is set to a value of 18, which is the code for an "invalid
+file number" error.  The program then displays the error code.
+
+
+open
+
+     The open command opens a file and assigns it to a file number.
+
+The open command should be followed by the file number to assign
+the file to (1, 2, or 3), a comma, and then a character string
+containing the name of the file to open.
+
+example:
+
+open 1,"test.dat"
+   opens the file test.dat and assigns it to file number 1
+open 1,f$
+   Opens a file whose name is contained in the variable f$, and   
+   assigns it the file number of 1
+
+     The open command will accept multiple sets of arguments. 
+therefore, the following command syntax is legal.
+
+open 1,"test.dat", 2,"test2.dat"
+
+     Note that if the specified file doesn't exist, the program
+will stop with a "file not found" error, or if error trapping has
+been enabled with an "on error" statement, the err variable will be
+set to 12.  If the given file name is invallid, the program will
+stop with a "bad file name" error, or the err variable will be set
+to 19.  If the file number given is not 1, 2, or 3, the program
+will hault with an "invallid file number" error, or the err
+variable will be set to 18.
+
+
+pprint
+
+     The pprint command is used to send text to the parallel port
+on the Type 'N Speak and Braille Lite.  It works identically to the
+print command, except that it sends it's output to the parallel
+port.  If you attempt to use this command on a Braille 'N Speak,
+the program will stop with a "unit has no parallel port" error, or
+if error trapping has been enabled with an "on error" statement,
+then the err variable will be set to 32.
+
+example:
+
+pprint "This is a test."
+   Sends the text "This is a test." to the parallel port
+
+     If there is a printer time-out, the program will stop with a
+"printer time-out error", or the err variable will be set to 33.
+
+
+print
+
+the print command makes the Braille 'N Speak or Type 'N Speak say
+something.  The Braille Lite will both speak and display what is
+being printed.  The print command can be used to display messages,
+variables, the results of expressions, or a combination thereof.
+
+examples
+
+print "Hello."
+   says the word hello
+print a+3
+   says the sum of a and 3
+
+     The print command will accept multiple arguments.  Thus, the
+following command syntax if legal.
+
+print "hello", 1+3
+
+     Instead of using the print command, you can use the short form
+of it, the question mark.
+
+example:
+
+? "hello"
+   this is the same as
+   print "hello"
+
+
+read
+
+     the read command reads data that has been defined using data
+statements, and puts it in the specified variable.
+
+example program:
+
+10 read a$
+20 print a$
+30 end
+100 data "catbird"
+
+     When this program is first run, the data statement in line 100
+is found, and the data element "catbird" is stored.  Then the
+program begins execution.  Line 10 reads one data element, and
+stores it in a variable called a$.  Line 20 prints the value in a$,
+which is "catbird".  Line 30 ends the program.  As this program
+illustrates, data statements need not preceed read statements.
+
+     Note that the type of variable in to which the data is being
+read must match the data type.
+
+example program:
+
+10 read a$
+20 print a$
+30 end
+100 data 28200
+
+     This program will not run, and will report a "type mismatch
+error" in line 10.  This is because line 10 is trying to read
+numeric data into a character string.
+
+     Programs also can not attempt to read more data than is
+available.
+
+example program:
+
+10 read a$
+20 read b$
+30 print b$
+40 end
+100 data "hello"
+
+     this program will not run, and will report an "end of data"
+error in line 20.  this is because the program is trying to read
+two data elements when only one is available.
+
+     It is possible to read data more than once.  See the
+description of the rewind command for more details.
+
+
+rem
+
+     The rem command allows you to place remarks in your programs.
+
+example:
+
+rem this is the beginning
+   places a remark in the program denoting the beginning
+
+     Instead of using the rem statement, you can simply use the
+apostrophee character.
+
+example:
+
+'This is a comment
+   This is the same as
+   rem this is a comment
+
+
+rename
+
+     The rename command allows you to rename a file in the Braille
+'N speak, Type 'N Speak, or Braille Lite.  It expects two
+arguments.  the first is a character string containing the original
+name of the file, and the second is a character string containing
+the new name of the file.  these arguments should be separated by
+commas.  
+
+example:
+
+rename "test.dat","test.new"
+   renames a file called test.dat to test.new
+rename a$, b$
+   renames a file whose name is contained in the character string 
+   a$, with the name found in the character string b$
+
+     The rename command will accept multiple sets of arguments. 
+Thus, the following command syntax is legal.
+
+rename "test.dat","test.new", "test1.dat","test1.new"
+
+     If the original file can't be found, the program stops with a
+"file not found" error, or if error trapping has been enabled with
+an "on error " statement, the err variable is set to 12.  If the
+original or new file name is bad, the program will stop with a "bad
+file name" error, or the err variable will be set to 19.  If there
+is already a file with the name that you are trying to reasign to
+the original file, the program will stop with a "file already
+exists" error, or the err variable will be set to 28.
+
+
+rewind
+
+     The rewind command allows a program to read data more than
+once.  It resets the data reading pointer back to the beginning of
+the data block.  It expects no arguments.
+
+
+say
+
+     The say command is designed for use on the Braille Lite.  It
+works the same as does the print command, except that it only
+speaks the text, and does not display it on the Braille Lite.  On
+the Braille 'N Speak and Type 'N Speak, it works identically to the
+print command.
+
+example:
+
+say "Hello."
+   Says the word hello, (on the braille Lite, does not display   
+   "hello" on the Braille display)
+
+     The say command will accept multiple arguments.  Thus, the
+following command syntax is legal.
+
+say "hello", 2+3
+
+
+sclear
+
+     The sclear command clears the sound buffer.  It expects no
+arguments.
+
+
+setfreq
+
+     The setfreq command allows you to set the frequency of the
+speech synthesizer in the Braille 'N Speak, Type 'N Speak, or
+Braille Lite.  the frequency must be between 0 and 16.  If the
+specified frequency is not within this range, the program will
+hault with an "argument out of range" eror.  If error trapping has
+been turned on with an "on error" statement, then the err variable
+will be set to 17.
+
+example:
+
+setfreq 10
+   sets the frequency of the speech synthesizer to 10
+
+     The current frequency setting of the speech synthesizer is
+returned by the s.freq function.
+
+
+setpitch
+
+
+     The setpitch command allows you to set the pitch of the speech
+synthesizer in the Braille 'N Speak, Type 'N Speak, or BRaille
+Lite.  The pitch can be between 0 and 255.  If the specified pitch
+is not within this range, the program will stop with an "argument
+out of range" error.  If error trapping has been turned on with an
+"on error" statement, then the err variable will be set to 17.
+
+example:
+
+setpitch 60
+   sets the speech pitch to 60
+
+     The current pitch setting of the speech synthesizer is
+returned by the s.pitch function.
+
+     Note:  The setpitch command does not currently work, due to a
+problem in the Braille 'N Speak, Type 'N Speak, and Braille Lite
+firmware.
+
+
+setpos
+
+     The setpos command sets the position in the sound buffer at
+which to begin playing.  It expects one argument, which is the
+number of the note in the sound buffer to point to.  this note can
+then be played with the splay command.  The number of the note must
+be between 1 and the number of notes in the buffer.  If it is not,
+then the program will stop with an "argument out of range" error,
+or if error trapping has been enabled with an "on error" statement,
+then the err variable will be set to 17.
+
+example:
+
+setpos 2
+   Prepares to play the second note in the sound buffer
+
+     The number of notes currently in the sound buffer is returned
+by the num.notes function.
+
+
+
+setrate
+
+     The setrate command allows you to set the rate of the speech
+synthesizer in the Braille 'N Speak, Type 'N Speak, or Braille
+Lite.  The rate must be between 1 and 15.  If the specified rate is
+outside of this range, the program will stop with an "argument out
+of range" error.  If error trapping has been turned on with an "on
+error" statement, then the err variable will be set to 17.
+
+example:
+
+setrate 12
+   sets the rate of the speech synthesizer to 12
+
+     The current rate setting of the speech synthesizer is
+contained in the variable called speech.rate.  therefore, to find
+out what the current rate setting is, you could use a command like
+this:
+
+print speech.rate
+
+     Note that changing the value in the speech.rate variable will
+not affect the rate of the speech synthesizer.
+
+
+setsound
+
+     The setsound command stores one note in the sound buffer.  It
+expects two arguments.  The first is the frequency of the note in
+Hertz.  The frequency must be between 34 and 15500 Hertz.  If it is
+not, then the program will hault with an "argument out of range"
+error, or if error trapping has been enabled with an "on error"
+statement, then the err variable will be set to 17.  The second
+argument is the duration of the note in .1 second incriments.  This
+value must be between 0 and 255.  If it is not, the program will
+stop with an "argument out of range" error, or the err variable
+will be set to 17.
+
+example:
+
+setsound 300,2
+   Stores a tone in the sound buffer with a frequency of 300 Hertz 
+  and a duration of .2 seconds.
+
+     The setsound command will accept multiple sets of arguments. 
+Therefore, the following command syntax is legal.
+
+setsound 100,2, 200,3 300,4 500,6
+
+     The sound buffer can hold 128 notes.  If you attempt to store
+more than 128 notes in it, the program will stop with a "Sound
+buffer is full" error, or the err variable will be set to 34.
+
+
+setvol
+
+     The setvol command allows you to set the volume of the speech
+synthesizer in the Braille 'N Speak, Type 'N Speak, or Braille
+Lite.  The volume must be between 0 and 15.  If the specified
+volume is outside of this range, the program will stop with an
+"argument out of range" error.  If error trapping has been turned
+on with an "on error" statement, then the err variable will be set
+to 17.
+
+example:
+
+setvol 2
+   sets the volume of the speech synthesizer to 2
+
+     The current volume setting of the speech synthesizer is
+contained in the variable called speech.volume.  Therefore, to find
+out what the current volume setting is, you could use a command
+like this:
+
+print speech.volume
+
+     Note that changing the value in the speech.volume variable
+will not affect the volume of the speech synthesizer.
+
+
+sget
+
+     The sget command gets a character from the serial port, and
+stores it in the specified variable.  the variable must be a
+character string, otherwise, the program will hault with a "type
+mismatch" error, or if error trapping is on, the err variable will
+be set to 3.  The sget command polls the serial port for five
+seconds.  If it receives nothing, the program will stop with a
+"nothing available from serial port error", or the err variable
+will be set to 27.
+
+example:
+
+sget c$
+   gets a character from the serial port and stores it in c$
+
+     The sget command will accept multiple arguments.  Thus, the
+following command syntax is legal.
+
+sget c$, d$
+
+
+sinput
+
+     The sinput command gets a line of text from the serial port
+and stores it in the specified variable.  The sinput command will
+poll the serial port for five seconds.  If it receives nothing, the
+program will hault with a "nothing available from serial port"
+error, or if error trapping is enabled, the err variable will be
+set to 27.
+
+examples:
+
+sinput i
+   gets a line of text from the serial port, and stores it as a   
+   numeric value in a variable called i
+sinput a$
+   gets a line of text from the serial port, and stores it as a   
+   character string in a variable called a$
+
+     The sinput command will accept multiple arguments.  thus, the
+following command syntax is legal.
+
+sinput a$, b, c$
+
+
+sound
+
+     The sound command allows music and beeps to be generated on
+the Braille 'N speak, Type 'N Speak, or Braille Lite.  It expects
+two arguments.  the first is the frequency of the note to be
+played, and the second is the duration of the note, in .1 second
+incriments.  The frequency must be between 34 and 15500 Hertz.  If
+it is not, then the program will stop with an "argument out of
+range" error, or if error trapping has been enabled with an "on
+error" statement, then the err variable will be set to 17.  the
+second argument must be between 0 and 255.  If it is not, then the
+program will stop with an "argument out of range" error, or the err
+variable will be set to 17.
+
+example:
+
+sound 440,10
+   plays a tone with a frequency of 440 HZ for one second
+
+     The sound command will accept multiple sets of arguments. 
+Thus, the following command syntax is legal.
+
+sound 100,2, 200,4, 400,8
+
+     Because of the limitted sound chip in the Braille 'N Speak,
+Type 'N Speak, and Braille Lite, the frequency played may not
+exactly match the desired frequency.  for example, when playing a
+sound with a
+frequency of 440 Hertz, the actual sound being played may be a few
+Hertz more or less than 440.
+
+     A frequency of zero can be used to generate silence for a
+specified amount of time.
+
+example:
+
+sound 0,10
+   Causes one second of silence
+
+     For more information about creating music using the sound
+command, referr to the file called music.txt.
+
+
+splay
+
+     The splay command plays the next note in the sound buffer.  It
+expects no arguments.  If there aren't any notes left to play in
+the sound buffer, then the program will hault with a "End of sound
+data" error, or if error trapping has been enabled with an "on
+error" statement, then the err variable will be set to 31.
+
+
+sprint
+
+     The sprint command sends text out the serial port.  If there
+is no response after five seconds, the program will stop with a
+"can't write to serial port" error, or if error trapping is
+enabled, the err variable will be set to 26.
+
+example:
+
+sprint "hello"
+   sends the word hello out the serial port
+sprint 3*3
+   sends the result of the expression 3*3 out the serial port
+
+     The sprint command will accept multiple arguments.  Thus, the
+following command syntax is legal.
+
+sprint "hello", 3+3
+
+
+wend
+
+     The wend command is used to indicate the end of a while loop. 
+It must have a matching while, or the program will not compile, and
+will return a wend without while error.
+
+
+while
+
+     The while command allows the definition of while loops.  The
+while loop should be followed with a comparison statement.  The
+while loop is ended with a wend statement.  If the while statement
+does not have an accompanying wend, the program will not compile,
+and a while without wend error will be announced.
+     The body of the while loop will be executed as long as the
+comparison after the while is true.  Once the comparison becomes
+false, the while loop is skiped, and the program begins execution
+just after the while loop.
+
+example program
+
+10 choice = 1
+20 while choice <> 0
+30 print "Enter your choice, 0 to quit."
+40 input choice
+50 wend
+
+The above program uses a while loop to prompt the user for a choice
+until he/she enters a zero.  When the user enters a zero, the
+condition after the while (choice <> 0) is false, and the loop is
+skipped.
+
+
+
+The following is a listing of functions that are built-in to the
+interpreter, and how they work.  All the functions that accept
+arguments require their arguments to be in parentheses.
+
+example:
+
+function name(arguments)
+
+The time and date functions (which require no arguments) do not
+need parentheses at all.
+
+Functions are not commands.  The values that they return can be
+used in print and assignment statements.
+
+
+abs
+
+The abs function returns the absolute value of the argument passed
+to it.  For example:
+
+abs(3) = 3 and
+abs(-88) = 88
+
+
+asc
+
+     The asc function returns the ascii value of the first
+character of the string passed to it.  For example asc("About")
+would be equal to 65, which is the ASCII value for a capital A.
+
+
+chr$
+
+     The chr$ function returns a character string containing the
+character whose ASCII value is passed to it.
+
+examples:
+
+chr$(65)
+   returns "A"
+chr$(13)
+   returns string containing carriadge return, (ASCII 13)
+
+
+
+date.day
+
+     The date.day function returns the current day of the month. 
+It expects no arguments or parentheses.
+
+
+date.mon
+
+     The date.mon function returns the current month.  It expects
+no arguments or parentheses.
+
+
+date.year
+
+     The date.year function returns the last two digits of the
+current year.  It expects no arguments or parentheses.
+
+
+grade2$
+
+     The grade2$ function backtranslates the string passed to it
+and returns the result.  Therefore, grade2$("pap}") would return
+"paper".
+
+
+int
+
+     the int function returns its argument without anything after
+the decimal point.  It doesn't round the number, it simply removes
+the portion after the decimal point.  therefore, int(2.2) = 2 and
+int(4.99) = 4.
+
+
+left$
+
+     the left$ function allows a program to read the first part of
+a string.  It expects two arguments.  the first is the name of the
+string, and the second is the number of characters to read.
+
+example program:
+
+10 a$ = "catbird"
+20 print left$(a$, 3)
+30 end
+
+     Line 20 uses the left$ function to print the first three
+letters of the a$ string.  this program prints "cat".
+
+
+len
+
+     the len function returns the length of the string passed to
+it.
+
+
+mid$
+
+     The mid$ function allows the disection of strings.  It expects
+three arguments.  the first is the name of a string, the second is
+the position at which to start reading characters, and the third is
+the number of characters to read from the string.
+
+example program:
+
+10 a$ = "hello"
+20 print mid$(a$, 2, 2)
+30 end
+
+     Line 20 calls the mid$ function.  The function begins reading
+at the second letter in the a$ string, and reads two letters.  This
+program would print "el".
+
+
+num.notes
+
+     The num.notes function returns the number of notes currently
+stored in the sound buffer.  It expects no arguments or
+parentheses.
+
+
+right$
+
+     the right$ function works the same as the left$ function,
+except that instead of reading characters from the beginning of a
+string, it reads characters from the end of a string.  It expects
+two arguments.  the first is the name of a string, and the second
+is the number of characters to read.
+example program:
+
+10 a$ = "catbird"
+20 print right$(a$, 4)
+30 end
+
+     Line 20 uses the mid$ function to read the last four letters
+from the a$ string.  This program would print "bird"
+
+rnd
+
+     The rnd function returns a random number between 0 and 1.  by
+convention, it requires a numeric argument following it in
+parentheses.  However, this argument
+is not used.
+
+example:
+
+x = rnd(1)
+   This statement generates a random number between 0 and 1, and
+   puts it in the variable x.
+
+
+s.freq
+
+     The s.freq function returns the current frequency setting of
+the speech synthesizer.  It expects no arguments or parentheses.
+
+
+s.pitch
+
+     The s.pitch function returns the current pitch setting of the
+speech synthesizer.  It expects no arguments or parentheses.
+
+
+s.rate
+
+     The s.rate function returns the current rate setting of the
+speech synthesizer.  It expects no arguments or parentheses.
+
+
+s.volume
+
+     The s.volume function returns the current volume setting of
+the speech synthesizer.  It expects no arguments or parentheses.
+
+
+str$
+
+     The str$ returns a character string containing the number
+passed to it.  Therefore, str$("280") = 280.
+
+
+
+time.hour
+
+     The time.hour function returns the current hour in twenty-four
+hour format.  For example, if it were 3:15 P.M., time.hour would
+return 15.  Time.hour expects no arguments or parentheses.
+
+
+time.min
+
+     The time.min functions returns the current minute.  It expects
+no arguments or parentheses.
+
+
+time.sec
+
+     The time.sec function returns the current second.  It expects
+no arguments or parentheses.
+
+
+
+val
+
+     The val function returns the numeric value of a character
+string.  Therefore, val("300") = 300.  Also, val("hello") = 0,
+since the string "hello" has no numeric value.  Unlike conventional
+basic, the val function in this version will evaluate strings as
+expressions.  For example, if a string named a$ contained the text
+"2*3", val(a$) would equal 6.
+
+
+unit.type
+
+     The unit.type function returns the type of the unit being run.
+
+The types are as follows:
+
+0-- Braille 'N Speak
+1-- Type 'N Speak
+2-- Braille Lite
+
+
+
+List of Error Codes
+
+
+1-- syntax error
+3-- type mismatch error
+5-- expression too complex error
+8-- not enough memory error
+9-- array too complex error
+11-- array access error
+12-- file not found error
+13-- rong number of arguments
+14-- return without gosub error
+15-- end of data error
+16-- division by zero error
+17-- argument out of range error
+18-- invalid file number error
+19-- bad file name
+20-- file is already open error
+21-- file not open error
+22-- too many arguments
+23-- can't create file
+24-- end of file
+25-- file is write-protected error
+26-- can't write to serial port error
+27-- nothing available from serial port error
+28-- file already exists error
+29-- break
+30-- re-dimmed array error
+31-- End of sound data error
+32-- unit has no parallel port error
+33- printer time-out error
+34-- sound buffer is full error
+
+
+
+Technical Info
+
+     Here's just a few technical notes about the interpreter.
+
+     Nothing in the interpreter which is outside of quotation marks
+is case sensative.  Everything is converted to lower-case in the
+compile.bns program.
+
+     Variables can be no longer than 40 characters.  This includes
+the $ character at the end of character string variable names.
+
+     The maximum line length is 128 characters.
+
+     The maximum character string length is 126 characters.
+
+     Line numbers must be between 0 and 65535.
+
+     The variable data area is six K in size.  This area contains
+all variables and their values, as well as information defined by
+data statements.
+
+     Arrays may be up to ten dimensions deep.  For example:
+
+a$ (5, 5, 5, 5, 5, 5, 5, 5, 5, 5)
+
+     The revision date of both the compile.bns and run.bns programs
+can be obtained by pointing to the file in the files menu, and
+pressing question-mark chord.
+
+
+
+Updates
+
+     The latest version of the Basic interpreter is always
+available on the Blazie Engeneering bulletin board in the Basic
+file area.  You can reach the Braille In BBS by phone at
+(410) 893-8944, or via the Internet by telnetting to blazie.com. 
+You can also get the latest version of the Basic Interpreter via
+the Internet by anonymously FTPing to blazie.com.  Then login as
+anonymous, and give your email address as a password.  The
+interpreter is in the /pub/basic directory.
+
+
+
+

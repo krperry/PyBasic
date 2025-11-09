@@ -1,0 +1,58 @@
+                     Dan's BASIC Games version 2.5...
+
+     
+     Welcome. You'll find a few cool enhancements in this version; I 
+realize it's not the big 3.0 I promised. Although it's been fun coding 
+these games for the past few years, I feel that it is time for me to move 
+on. You have been a great client, and I appreciate your support. Without 
+your feedback, these games wouldn't have evolved to the state they are at 
+now; I doubt anyone would disagree that they are the best games available 
+for the note takers. I'm honored to have personally communicated with all 
+of my clients; to me, you aren't an email address or an aspect number, but 
+a person who has their own views and comments regarding a product. I made 
+my share of mistakes (such as the Braille Lite 40 sound shut off problem, 
+a corrupted trivia.bas file in version 2.0, and Arcade not working 
+properly on blt2000 units) but you never showed any disrespect or 
+aggravation; you explained the problem and even gave me possible 
+solutions! It's not often that clients realize the fact that every one 
+makes mistakes, and in this day and age, I think all programmers deserve 
+the respect you showed me. If everyone showed this much courtesy, there 
+would be no miscommunication between the seller and the buyer. Thank you 
+for making my first business endeavor a fun and enjoyable learning 
+experience. My motivation level has dropped in regard to coding these 
+games, I'm finding it hard to come up with new ideas, and I want to 
+officially sign off now. If absolutely necessary, updates will be created 
+to fix bugs, but that's it. All the best... And don't forget to keep 
+gaming! Email me at my new address, daniel_zingaro@hotmail.com if you have 
+any comments. Peace, and God bless.
+
+                                     
+                                                                          
+                              *Enhancements*
+
+     
+     Dhl has been given a few splashes of functionality, including a coin 
+toss to start the game, faster game play, and a smarter computer opponent; 
+in fact, a serious bug was fixed which made the computer play like garbage 
+in the last version. Some minor changes were also made.
+     Tic has a new enhanced game mode, in which the contents of a square 
+is randomly removed. This should make the game more fun, because two pros 
+playing won't always end in a tie now! Some code has been cleaned also.
+     Gotcha hasn't been updated in a while, so I ran through the entire 
+thing optimizing code. Unfortunately, I had done such a good job the first 
+time that all I could do without rewriting major parts of it was shave off 
+300 bytes from the game and speed up game play slightly. You probably 
+won't notice any difference, but I had to write this for my own psyche.
+
+                                     
+                                                                          
+                               *New Games*
+
+     
+     A stock simulation game has been created; sell and buy stocks 
+according to price gains and losses. Hit games.txt for further 
+information. And no, there is no benefit in buying the first stock.
+     
+     That's it. I now plan to develop Windows software, and have a few 
+titles lined up for creation already. Hit my new URL, 
+http://danssoft.freeservers.com, for the latest stuff I'm working on.
