@@ -17,17 +17,18 @@
 
 """This script loads and runs a BASIC program from a .bas file."""
 
-import sys
+import argparse
 import os
+import sys
 from basic.lexer import Lexer
 from basic.program import Program
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python run.py <filename.bas>")
-        sys.exit(1)
-
-    filename = sys.argv[1]
+    parser = argparse.ArgumentParser(description="Load and run a BASIC program from a .bas file")
+    parser.add_argument("filename", help="The BASIC program file to run (.bas extension will be added if not present)")
+    
+    args = parser.parse_args()
+    filename = args.filename
 
     # Ensure the file ends with .bas
     if not filename.lower().endswith(".bas"):
