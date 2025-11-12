@@ -96,17 +96,18 @@ install_requirements() {
 copy_basic_script() {
     print_info "Copying basic script and dependencies..."
     
-    # Copy basic.py directly to release root
+    # Copy and modify basic.py for release root
     if [ -f "$SRC_DIR/basic/basic.py" ]; then
-        cp "$SRC_DIR/basic/basic.py" "$RELEASE_DIR/basic.py"
-        print_status "Copied basic.py to release root"
+        # Copy the file and modify import paths
+        sed 's/from basic\./from basiclib\./g; s/import basic\./import basiclib\./g' "$SRC_DIR/basic/basic.py" > "$RELEASE_DIR/basic.py"
+        print_status "Copied and modified basic.py to release root"
     else
         print_error "Source file $SRC_DIR/basic/basic.py not found"
         exit 1
     fi
     
-    # Create basic/ directory in release root (for supporting modules)
-    local basic_release_dir="$RELEASE_DIR/basic"
+    # Create basiclib/ directory in release root (for supporting modules)
+    local basic_release_dir="$RELEASE_DIR/basiclib"
     mkdir -p "$basic_release_dir"
     
     # Copy only the basic interpreter modules (exclude disassembler)
@@ -124,7 +125,8 @@ copy_basic_script() {
     
     for file in "${basic_files[@]}"; do
         if [ -f "$SRC_DIR/basic/$file" ]; then
-            cp "$SRC_DIR/basic/$file" "$basic_release_dir/"
+            # Copy and modify import paths from basic. to basiclib.
+            sed 's/from basic\./from basiclib\./g; s/import basic\./import basiclib\./g' "$SRC_DIR/basic/$file" > "$basic_release_dir/$file"
             print_status "  ✓ $file"
         else
             print_warning "  ⚠ $file not found"
@@ -272,7 +274,7 @@ This release contains two versions of the PyBasic interpreter:
 - Source code visible and editable
 - Supports interactive mode with `-i` flag
 - Runs .bas files (text format)
-- Supporting modules in `basic/` directory
+- Supporting modules in `basiclib/` directory
 
 ### Usage:
 ```bash
@@ -307,7 +309,7 @@ chmod +x basic-bns
 release/
 ├── basic.py              # Main interpreter (source)
 ├── basic-bns             # Compiled executable
-├── basic/                # Supporting modules for basic.py
+├── basiclib/             # Supporting modules for basic.py
 │   ├── __init__.py
 │   ├── basicparser.py
 │   ├── basictoken.py
@@ -452,7 +454,7 @@ main() {
     echo "Contents:"
     echo "- basic.py        - Main interpreter script (source)"
     echo "- basic-bns       - Compiled executable (no Python required)"
-    echo "- basic/          - Supporting modules for basic.py"
+    echo "- basiclib/       - Supporting modules for basic.py"
     echo "- examples/       - BASIC program examples"
     echo "- bt-examples/    - Additional BASIC examples"
     echo "- bns_game_pack/  - Binary game files"

@@ -35,12 +35,20 @@ def copy_basic_script(release_path):
     """Copy the uncompiled basic script and its dependencies in flat structure"""
     print("Copying basic script and dependencies...")
     
-    # Copy basic.py directly to release root
+    # Copy and modify basic.py for release root
     basic_main_src = SRC_DIR / "basic" / "basic.py"
-    shutil.copy2(basic_main_src, release_path / "basic.py")
+    with open(basic_main_src, "r", encoding="utf-8") as f:
+        content = f.read()
     
-    # Create basic/ directory in release root (for supporting modules)
-    basic_release_dir = release_path / "basic"
+    # Modify import paths from basic. to basiclib.
+    content = content.replace("from basic.", "from basiclib.")
+    content = content.replace("import basic.", "import basiclib.")
+    
+    with open(release_path / "basic.py", "w", encoding="utf-8") as f:
+        f.write(content)
+    
+    # Create basiclib/ directory in release root (for supporting modules)
+    basic_release_dir = release_path / "basiclib"
     basic_release_dir.mkdir(exist_ok=True)
     
     # Copy only the basic interpreter modules (exclude disassembler)
@@ -62,13 +70,20 @@ def copy_basic_script(release_path):
     for filename in basic_files:
         src_file = basic_src / filename
         if src_file.exists():
-            shutil.copy2(src_file, basic_release_dir / filename)
+            # Read the file and modify import paths
+            with open(src_file, "r", encoding="utf-8") as f:
+                content = f.read()
+            
+            # Modify import paths from basic. to basiclib.
+            content = content.replace("from basic.", "from basiclib.")
+            content = content.replace("import basic.", "import basiclib.")
+            
+            # Write the modified content
+            with open(basic_release_dir / filename, "w", encoding="utf-8") as f:
+                f.write(content)
             print(f"  ✓ {filename}")
-    
-    # Copy __pycache__ if it exists (for performance)
-    pycache_src = basic_src / "__pycache__"
-    if pycache_src.exists():
-        shutil.copytree(pycache_src, basic_release_dir / "__pycache__", dirs_exist_ok=True)
+        else:
+            print(f"  ⚠ {filename} not found")
     
     print(f"✓ Basic script and supporting modules copied")
     return basic_release_dir
@@ -225,7 +240,7 @@ This release contains two versions of the PyBasic interpreter:
 - Source code visible and editable
 - Supports interactive mode with `-i` flag
 - Runs .bas files (text format)
-- Supporting modules in `basic/` directory
+- Supporting modules in `basiclib/` directory
 
 ### Usage:
 ```bash
@@ -259,7 +274,7 @@ basic-bns.exe game.bas.bin
 release/
 ├── basic.py              # Main interpreter (source)
 ├── basic-bns.exe         # Compiled executable
-├── basic/                # Supporting modules for basic.py
+├── basiclib/             # Supporting modules for basic.py
 │   ├── __init__.py
 │   ├── basicparser.py
 │   ├── basictoken.py
