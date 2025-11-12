@@ -92,63 +92,57 @@ install_requirements() {
     print_status "Requirements installed"
 }
 
-# Copy basic script and dependencies
+# Copy basic script and dependencies in flat structure
 copy_basic_script() {
     print_info "Copying basic script and dependencies..."
     
-    local basic_release_dir="$RELEASE_DIR/basic"
-    mkdir -p "$basic_release_dir"
-    
-    # Copy the entire src/basic directory
-    if [ -d "$SRC_DIR/basic" ]; then
-        cp -r "$SRC_DIR/basic" "$basic_release_dir/"
-        print_status "Copied basic interpreter modules"
+    # Copy basic.py directly to release root
+    if [ -f "$SRC_DIR/basic/basic.py" ]; then
+        cp "$SRC_DIR/basic/basic.py" "$RELEASE_DIR/basic.py"
+        print_status "Copied basic.py to release root"
     else
-        print_error "Source directory $SRC_DIR/basic not found"
+        print_error "Source file $SRC_DIR/basic/basic.py not found"
         exit 1
     fi
     
-    # Copy the disassembler (needed by basic script)
-    if [ -d "$SRC_DIR/disassembler" ]; then
-        cp -r "$SRC_DIR/disassembler" "$basic_release_dir/"
-        print_status "Copied disassembler modules"
-    else
-        print_warning "Disassembler directory not found"
+    # Create basic/ directory in release root (for supporting modules)
+    local basic_release_dir="$RELEASE_DIR/basic"
+    mkdir -p "$basic_release_dir"
+    
+    # Copy only the basic interpreter modules (exclude disassembler)
+    local basic_files=(
+        "__init__.py"
+        "basicparser.py"
+        "basictoken.py"
+        "flowsignal.py"
+        "interpreter.py"
+        "lexer.py"
+        "music.py"
+        "program.py"
+        "run.py"
+    )
+    
+    for file in "${basic_files[@]}"; do
+        if [ -f "$SRC_DIR/basic/$file" ]; then
+            cp "$SRC_DIR/basic/$file" "$basic_release_dir/"
+            print_status "  ✓ $file"
+        else
+            print_warning "  ⚠ $file not found"
+        fi
+    done
+    
+    # Copy __pycache__ if it exists (for performance)
+    if [ -d "$SRC_DIR/basic/__pycache__" ]; then
+        cp -r "$SRC_DIR/basic/__pycache__" "$basic_release_dir/"
+        print_status "  ✓ __pycache__"
     fi
     
-    # Create a launcher script for basic
-    cat > "$basic_release_dir/basic.py" << 'EOF'
-#!/usr/bin/env python3
-import sys
-import os
-sys.path.insert(0, os.path.dirname(__file__))
-from basic.basic import main
-
-if __name__ == "__main__":
-    main()
-EOF
-    
-    # Make it executable
-    chmod +x "$basic_release_dir/basic.py"
-    
-    # Create a shell wrapper for easier execution
-    cat > "$basic_release_dir/basic" << 'EOF'
-#!/bin/bash
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-python3 "$SCRIPT_DIR/basic.py" "$@"
-EOF
-    
-    chmod +x "$basic_release_dir/basic"
-    
-    print_status "Basic script copied and configured"
+    print_status "Basic script and supporting modules copied"
 }
 
-# Build basic-bns executable using PyInstaller
+# Build basic-bns executable using PyInstaller and place directly in release root
 build_basic_bns_executable() {
     print_info "Building basic-bns executable..."
-    
-    local bns_release_dir="$RELEASE_DIR/basic-bns"
-    mkdir -p "$bns_release_dir"
     
     # Check if basic-bns.py exists
     if [ ! -f "$BASIC_BNS_DIR/basic-bns.py" ]; then
@@ -201,20 +195,20 @@ exe = EXE(
 )
 EOF
 
-    # Build with PyInstaller
+    # Build with PyInstaller directly to release root
     print_info "Running PyInstaller..."
     cd "$PROJECT_ROOT"
     
     $PYTHON_CMD -m PyInstaller \
         --clean \
-        --distpath "$bns_release_dir" \
+        --distpath "$RELEASE_DIR" \
         "$spec_file"
     
     if [ $? -eq 0 ]; then
-        print_status "basic-bns executable built successfully"
+        print_status "basic-bns executable built successfully and placed in release root"
         
         # Make sure the executable is executable
-        chmod +x "$bns_release_dir/basic-bns"
+        chmod +x "$RELEASE_DIR/basic-bns"
         
         # Clean up
         rm -f "$spec_file"
@@ -273,29 +267,27 @@ create_release_readme() {
 
 This release contains two versions of the PyBasic interpreter:
 
-## basic - Development Version (Uncompiled)
-- Location: `basic/basic.py` or `basic/basic` (shell wrapper)
+## basic.py - Development Version (Source Code)
+- Main interpreter script (in release root)
 - Source code visible and editable
 - Supports interactive mode with `-i` flag
 - Runs .bas files (text format)
+- Supporting modules in `basic/` directory
 
 ### Usage:
 ```bash
-# Using the Python script directly
-python3 basic/basic.py hello.bas
-
-# Using the shell wrapper (easier)
-./basic/basic hello.bas
+# Run a BASIC program
+python3 basic.py hello.bas
 
 # Interactive mode
-./basic/basic -i
+python3 basic.py -i
 
 # Interactive mode with file
-./basic/basic -i hello.bas
+python3 basic.py -i hello.bas
 ```
 
 ## basic-bns - Production Version (Compiled Executable)
-- Location: `basic-bns/basic-bns`
+- Standalone executable (in release root)
 - Compiled executable, source code protected
 - NO interactive mode (for security)
 - Runs .bas.bin files (compiled binary format)
@@ -304,10 +296,30 @@ python3 basic/basic.py hello.bas
 ### Usage:
 ```bash
 # Run a compiled BASIC binary program
-./basic-bns/basic-bns game.bas.bin
+./basic-bns game.bas.bin
 
 # Make sure it's executable (if needed)
-chmod +x basic-bns/basic-bns
+chmod +x basic-bns
+```
+
+## Structure
+```
+release/
+├── basic.py              # Main interpreter (source)
+├── basic-bns             # Compiled executable
+├── basic/                # Supporting modules for basic.py
+│   ├── __init__.py
+│   ├── basicparser.py
+│   ├── basictoken.py
+│   ├── interpreter.py
+│   └── ... (other modules)
+├── examples/             # Regular BASIC programs (.bas files)
+├── bt-examples/          # Additional BASIC examples
+├── bns_game_pack/        # Binary game files (.bas.bin format)
+├── docs/                 # Language reference and documentation
+├── README.md             # Project README
+├── LICENSE               # License file
+└── README_RELEASE.md     # This file
 ```
 
 ## Examples
@@ -319,21 +331,21 @@ chmod +x basic-bns/basic-bns
 - `docs/` - Language reference and documentation
 
 ## System Requirements
-- **basic**: Python 3.10 or later
+- **basic.py**: Python 3.10 or later
 - **basic-bns**: No dependencies (standalone executable)
 
 ## Installation
 1. Extract this archive to your preferred location
-2. Make scripts executable: `chmod +x basic/basic basic-bns/basic-bns`
+2. Make executable: `chmod +x basic-bns`
 3. Optionally add to PATH for system-wide access
 
 ## Quick Test
 ```bash
-# Test the uncompiled version
-./basic/basic examples/hello.bas
+# Test the source version
+python3 basic.py examples/factorial.bas
 
 # Test the compiled version (if .bas.bin files are available)
-./basic-bns/basic-bns bns_game_pack/game.bas.bin
+./basic-bns bns_game_pack/tic.bas.bin
 ```
 EOF
     
@@ -383,23 +395,31 @@ if [ ! -w "$INSTALL_DIR" ]; then
     exit 1
 fi
 
-# Copy executables
+# Copy executables from flat structure
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-if [ -f "$SCRIPT_DIR/basic/basic" ]; then
-    cp "$SCRIPT_DIR/basic/basic" "$INSTALL_DIR/"
-    chmod +x "$INSTALL_DIR/basic"
-    print_status "basic installed"
-fi
-
-if [ -f "$SCRIPT_DIR/basic-bns/basic-bns" ]; then
-    cp "$SCRIPT_DIR/basic-bns/basic-bns" "$INSTALL_DIR/"
+# Install basic-bns executable
+if [ -f "$SCRIPT_DIR/basic-bns" ]; then
+    cp "$SCRIPT_DIR/basic-bns" "$INSTALL_DIR/"
     chmod +x "$INSTALL_DIR/basic-bns"
     print_status "basic-bns installed"
 fi
 
+# Create a wrapper script for basic.py
+if [ -f "$SCRIPT_DIR/basic.py" ]; then
+    cat > "$INSTALL_DIR/basic" << WRAPPER_EOF
+#!/bin/bash
+# PyBasic wrapper script
+INSTALL_PATH="$SCRIPT_DIR"
+python3 "\$INSTALL_PATH/basic.py" "\$@"
+WRAPPER_EOF
+    chmod +x "$INSTALL_DIR/basic"
+    print_status "basic wrapper installed"
+fi
+
 print_status "Installation complete!"
 print_info "You can now run 'basic' and 'basic-bns' from anywhere."
+print_info "Note: 'basic' requires the source files to remain in $SCRIPT_DIR"
 EOF
     
     chmod +x "$RELEASE_DIR/install.sh"
@@ -430,17 +450,21 @@ main() {
     echo "Release created in: $RELEASE_DIR"
     echo
     echo "Contents:"
-    echo "- basic/          - Uncompiled Python script with shell wrapper"
-    echo "- basic-bns/      - Compiled executable (no Python required)"
+    echo "- basic.py        - Main interpreter script (source)"
+    echo "- basic-bns       - Compiled executable (no Python required)"
+    echo "- basic/          - Supporting modules for basic.py"
     echo "- examples/       - BASIC program examples"
+    echo "- bt-examples/    - Additional BASIC examples"
+    echo "- bns_game_pack/  - Binary game files"
     echo "- docs/           - Documentation"
     echo "- install.sh      - System installation script"
     echo "- README_RELEASE.md - Usage instructions"
     echo
     echo -e "${BLUE}Next steps:${NC}"
-    echo "1. Test the build: ./release/basic/basic examples/hello.bas"
-    echo "2. Install system-wide: cd release && sudo ./install.sh"
-    echo "3. Or distribute the entire release/ folder"
+    echo "1. Test the source version: cd release && python3 basic.py examples/factorial.bas"
+    echo "2. Test the compiled version: cd release && ./basic-bns bns_game_pack/tic.bas.bin"
+    echo "3. Install system-wide: cd release && sudo ./install.sh"
+    echo "4. Or distribute the entire release/ folder"
     echo
     
     return 0
