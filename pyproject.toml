@@ -9,8 +9,9 @@ dependencies = ["pygame>=2.6.1", "numpy>=2.2.6"]
 
 [project.scripts]
 basic = "basic.basic:main"
-interpreter = "basic.interpreter:main"
-basic-bns = "basic.basic_bns:main"
+dc = "disassembler.dc:main"
+basic-bns = "basic-bns.basic-bns:main"
+
 
 [build-system]
 requires = ["pdm-backend"]
