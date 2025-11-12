@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 """
 Build script for PyBasic release
@@ -31,40 +32,45 @@ def clean_release_dir():
     return release_path
 
 def copy_basic_script(release_path):
-    """Copy the uncompiled basic script and its dependencies"""
+    """Copy the uncompiled basic script and its dependencies in flat structure"""
     print("Copying basic script and dependencies...")
     
-    # Create basic directory in release
+    # Copy basic.py directly to release root
+    basic_main_src = SRC_DIR / "basic" / "basic.py"
+    shutil.copy2(basic_main_src, release_path / "basic.py")
+    
+    # Create basic/ directory in release root (for supporting modules)
     basic_release_dir = release_path / "basic"
     basic_release_dir.mkdir(exist_ok=True)
     
-    # Copy the entire src/basic directory
+    # Copy only the basic interpreter modules (exclude disassembler)
     basic_src = SRC_DIR / "basic"
-    shutil.copytree(basic_src, basic_release_dir / "basic", dirs_exist_ok=True)
     
-    # Copy the disassembler (needed by basic script)
-    disasm_src = SRC_DIR / "disassembler"
-    shutil.copytree(disasm_src, basic_release_dir / "disassembler", dirs_exist_ok=True)
+    # List of files to copy (exclude disassembler-related files)
+    basic_files = [
+        "__init__.py",
+        "basicparser.py",
+        "basictoken.py",
+        "flowsignal.py",
+        "interpreter.py", 
+        "lexer.py",
+        "music.py",
+        "program.py",
+        "run.py"
+    ]
     
-    # Create a launcher script for basic
-    launcher_content = '''#!/usr/bin/env python3
-import sys
-import os
-sys.path.insert(0, os.path.dirname(__file__))
-from basic.basic import main
-
-if __name__ == "__main__":
-    main()
-'''
+    for filename in basic_files:
+        src_file = basic_src / filename
+        if src_file.exists():
+            shutil.copy2(src_file, basic_release_dir / filename)
+            print(f"  ✓ {filename}")
     
-    with open(basic_release_dir / "basic.py", "w") as f:
-        f.write(launcher_content)
+    # Copy __pycache__ if it exists (for performance)
+    pycache_src = basic_src / "__pycache__"
+    if pycache_src.exists():
+        shutil.copytree(pycache_src, basic_release_dir / "__pycache__", dirs_exist_ok=True)
     
-    # Make it executable on Unix systems
-    if os.name == 'posix':
-        os.chmod(basic_release_dir / "basic.py", 0o755)
-    
-    print(f"✓ Basic script copied to {basic_release_dir}")
+    print(f"✓ Basic script and supporting modules copied")
     return basic_release_dir
 
 def install_pyinstaller():
@@ -84,15 +90,13 @@ def install_pyinstaller():
             return False
 
 def build_basic_bns_executable(release_path):
-    """Build the basic-bns executable using PyInstaller"""
+    """Build the basic-bns executable using PyInstaller and place directly in release root"""
     print("Building basic-bns executable...")
     
     if not install_pyinstaller():
         return None
     
-    # Create basic-bns directory in release
-    bns_release_dir = release_path / "basic-bns"
-    bns_release_dir.mkdir(exist_ok=True)
+    # Build basic-bns.exe directly to release root (no subfolder)
     
     # Create a spec file for PyInstaller
     spec_content = f'''# -*- mode: python ; coding: utf-8 -*-
@@ -142,11 +146,11 @@ exe = EXE(
         f.write(spec_content)
     
     try:
-        # Build with PyInstaller
+        # Build with PyInstaller directly to release root
         cmd = [
             sys.executable, "-m", "PyInstaller", 
             "--clean",
-            "--distpath", str(bns_release_dir),
+            "--distpath", str(release_path),  # Put exe directly in release root
             str(spec_file)
         ]
         
@@ -154,13 +158,13 @@ exe = EXE(
         result = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True, text=True)
         
         if result.returncode == 0:
-            print("✓ basic-bns executable built successfully")
+            print("✓ basic-bns.exe built successfully and placed in release root")
             # Clean up
             spec_file.unlink()
             build_dir = PROJECT_ROOT / "build"
             if build_dir.exists():
                 shutil.rmtree(build_dir)
-            return bns_release_dir
+            return release_path
         else:
             print(f"✗ PyInstaller failed:")
             print(f"STDOUT: {result.stdout}")
@@ -216,26 +220,27 @@ def create_release_readme(release_path):
 
 This release contains two versions of the PyBasic interpreter:
 
-## basic - Development Version (Uncompiled)
-- Location: `basic/basic.py`
+## basic.py - Development Version (Source Code)
+- Main interpreter script (in release root)
 - Source code visible and editable
 - Supports interactive mode with `-i` flag
 - Runs .bas files (text format)
+- Supporting modules in `basic/` directory
 
 ### Usage:
 ```bash
 # Run a BASIC program
-python basic/basic.py hello.bas
+python basic.py hello.bas
 
 # Interactive mode
-python basic/basic.py -i
+python basic.py -i
 
 # Interactive mode with file
-python basic/basic.py -i hello.bas
+python basic.py -i hello.bas
 ```
 
-## basic-bns - Production Version (Compiled Executable)
-- Location: `basic-bns/basic-bns` (or `basic-bns.exe` on Windows)
+## basic-bns.exe - Production Version (Compiled Executable)
+- Standalone executable (in release root)
 - Compiled executable, source code protected
 - NO interactive mode (for security)
 - Runs .bas.bin files (compiled binary format)
@@ -243,10 +248,30 @@ python basic/basic.py -i hello.bas
 ### Usage:
 ```bash
 # Run a compiled BASIC binary program
-./basic-bns/basic-bns game.bas.bin
+./basic-bns.exe game.bas.bin
 
 # On Windows:
-basic-bns\\basic-bns.exe game.bas.bin
+basic-bns.exe game.bas.bin
+```
+
+## Structure
+```
+release/
+├── basic.py              # Main interpreter (source)
+├── basic-bns.exe         # Compiled executable
+├── basic/                # Supporting modules for basic.py
+│   ├── __init__.py
+│   ├── basicparser.py
+│   ├── basictoken.py
+│   ├── interpreter.py
+│   └── ... (other modules)
+├── examples/             # Regular BASIC programs (.bas files)
+├── bt-examples/          # Additional BASIC examples
+├── bns_game_pack/        # Binary game files (.bas.bin format)
+├── docs/                 # Language reference and documentation
+├── README.md             # Project README
+├── LICENSE               # License file
+└── README_RELEASE.md     # This file
 ```
 
 ## Examples
@@ -257,18 +282,12 @@ basic-bns\\basic-bns.exe game.bas.bin
 ## Documentation
 - `docs/` - Language reference and documentation
 
-## Compiling BASIC Programs
-Use the `dc.py` disassembler in reverse to create .bas.bin files from .bas files:
-```bash
-python basic/disassembler/dc.py --compile program.bas
-```
-
 ## Requirements
-- Python 3.10 or later (for the uncompiled version)
-- The compiled version (basic-bns) has no Python dependencies
+- Python 3.10 or later (for basic.py)
+- The compiled version (basic-bns.exe) has no Python dependencies
 '''
     
-    with open(release_path / "README_RELEASE.md", "w") as f:
+    with open(release_path / "README_RELEASE.md", "w", encoding="utf-8") as f:
         f.write(readme_content)
     
     print("✓ Release README created")
