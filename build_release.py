@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Build script for PyBasic release
@@ -35,7 +34,7 @@ def copy_basic_script(release_path):
     """Copy the uncompiled basic script and its dependencies in flat structure"""
     print("Copying basic script and dependencies...")
     
-    # Copy and modify basic.py for release root
+    # Copy and modify basic.py to create executable 'basic' script
     basic_main_src = SRC_DIR / "basic" / "basic.py"
     with open(basic_main_src, "r", encoding="utf-8") as f:
         content = f.read()
@@ -234,7 +233,7 @@ def create_release_readme(release_path):
 
 This release contains two versions of the PyBasic interpreter:
 
-## basic.py - Development Version (Source Code)
+## basic - Development Version (Source Code)
 - Main interpreter script (in release root)
 - Source code visible and editable
 - Supports interactive mode with `-i` flag
@@ -243,14 +242,19 @@ This release contains two versions of the PyBasic interpreter:
 
 ### Usage:
 ```bash
-# Run a BASIC program
-python basic.py hello.bas
+# Run a BASIC program (Windows)
+python basic hello.bas
+
+# Run a BASIC program (Linux/Unix)
+./basic hello.bas
 
 # Interactive mode
-python basic.py -i
+python basic -i    # Windows
+./basic -i         # Linux/Unix
 
 # Interactive mode with file
-python basic.py -i hello.bas
+python basic -i hello.bas    # Windows
+./basic -i hello.bas         # Linux/Unix
 ```
 
 ## basic-bns.exe - Production Version (Compiled Executable)
@@ -271,21 +275,23 @@ basic-bns.exe game.bas.bin
 ## Structure
 ```
 release/
-├── basic.py              # Main interpreter (source)
-├── basic-bns.exe         # Compiled executable
-├── basiclib/             # Supporting modules for basic.py
+├── basic.py              # Main interpreter script
+├── basic-bns(.exe)       # Compiled executable  
+├── basiclib/             # Supporting modules (renamed from basic/)
 │   ├── __init__.py
 │   ├── basicparser.py
 │   ├── basictoken.py
-│   ├── interpreter.py
-│   └── ... (other modules)
-├── examples/             # Regular BASIC programs (.bas files)
-├── bt-examples/          # Additional BASIC examples
-├── bns_game_pack/        # Binary game files (.bas.bin format)
-├── docs/                 # Language reference and documentation
-├── README.md             # Project README
-├── LICENSE               # License file
-└── README_RELEASE.md     # This file
+│   ├── flowsignal.py
+│   ├── lexer.py
+│   ├── music.py
+│   ├── program.py
+│   └── run.py
+├── examples/             # Example programs
+├── bt-examples/          # More examples  
+├── bns_game_pack/        # Binary games
+├── docs/                 # Documentation
+├── README.md & LICENSE   # Project files
+└── README_RELEASE.md     # Release instructions
 ```
 
 ## Examples

@@ -96,11 +96,12 @@ install_requirements() {
 copy_basic_script() {
     print_info "Copying basic script and dependencies..."
     
-    # Copy and modify basic.py for release root
+    # Copy and modify basic.py to create executable 'basic' script
     if [ -f "$SRC_DIR/basic/basic.py" ]; then
-        # Copy the file and modify import paths
-        sed 's/from basic\./from basiclib\./g; s/import basic\./import basiclib\./g' "$SRC_DIR/basic/basic.py" > "$RELEASE_DIR/basic.py"
-        print_status "Copied and modified basic.py to release root"
+        # Copy the file and modify import paths, make it executable
+        sed 's/from basic\./from basiclib\./g; s/import basic\./import basiclib\./g' "$SRC_DIR/basic/basic.py" > "$RELEASE_DIR/basic"
+        chmod +x "$RELEASE_DIR/basic"
+        print_status "Created executable 'basic' script in release root"
     else
         print_error "Source file $SRC_DIR/basic/basic.py not found"
         exit 1
@@ -268,8 +269,8 @@ create_release_readme() {
 
 This release contains two versions of the PyBasic interpreter:
 
-## basic.py - Development Version (Source Code)
-- Main interpreter script (in release root)
+## basic - Development Version (Source Code)
+- Main interpreter script (executable in release root)
 - Source code visible and editable
 - Supports interactive mode with `-i` flag
 - Runs .bas files (text format)
@@ -278,13 +279,13 @@ This release contains two versions of the PyBasic interpreter:
 ### Usage:
 ```bash
 # Run a BASIC program
-python3 basic.py hello.bas
+./basic hello.bas
 
 # Interactive mode
-python3 basic.py -i
+./basic -i
 
 # Interactive mode with file
-python3 basic.py -i hello.bas
+./basic -i hello.bas
 ```
 
 ## basic-bns - Production Version (Compiled Executable)
@@ -306,9 +307,9 @@ chmod +x basic-bns
 ## Structure
 ```
 release/
-├── basic.py              # Main interpreter (source)
+├── basic                 # Main interpreter (executable script)
 ├── basic-bns             # Compiled executable
-├── basiclib/             # Supporting modules for basic.py
+├── basiclib/             # Supporting modules for basic
 │   ├── __init__.py
 │   ├── basicparser.py
 │   ├── basictoken.py
@@ -406,16 +407,11 @@ if [ -f "$SCRIPT_DIR/basic-bns" ]; then
     print_status "basic-bns installed"
 fi
 
-# Create a wrapper script for basic.py
-if [ -f "$SCRIPT_DIR/basic.py" ]; then
-    cat > "$INSTALL_DIR/basic" << WRAPPER_EOF
-#!/bin/bash
-# PyBasic wrapper script
-INSTALL_PATH="$SCRIPT_DIR"
-python3 "\$INSTALL_PATH/basic.py" "\$@"
-WRAPPER_EOF
+# Install the basic executable script
+if [ -f "$SCRIPT_DIR/basic" ]; then
+    cp "$SCRIPT_DIR/basic" "$INSTALL_DIR/"
     chmod +x "$INSTALL_DIR/basic"
-    print_status "basic wrapper installed"
+    print_status "basic executable installed"
 fi
 
 print_status "Installation complete!"
@@ -451,9 +447,9 @@ main() {
     echo "Release created in: $RELEASE_DIR"
     echo
     echo "Contents:"
-    echo "- basic.py        - Main interpreter script (source)"
+    echo "- basic           - Main interpreter (executable script)"
     echo "- basic-bns       - Compiled executable (no Python required)"
-    echo "- basiclib/       - Supporting modules for basic.py"
+    echo "- basiclib/       - Supporting modules for basic"
     echo "- examples/       - BASIC program examples"
     echo "- bt-examples/    - Additional BASIC examples"
     echo "- bns_game_pack/  - Binary game files"
@@ -462,7 +458,7 @@ main() {
     echo "- README_RELEASE.md - Usage instructions"
     echo
     echo -e "${BLUE}Next steps:${NC}"
-    echo "1. Test the source version: cd release && python3 basic.py examples/factorial.bas"
+    echo "1. Test the source version: cd release && ./basic examples/factorial.bas"
     echo "2. Test the compiled version: cd release && ./basic-bns bns_game_pack/tic.bas.bin"
     echo "3. Install system-wide: cd release && sudo ./install.sh"
     echo "4. Or distribute the entire release/ folder"
