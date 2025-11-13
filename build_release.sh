@@ -116,7 +116,6 @@ copy_basic_script() {
         "basicparser.py"
         "basictoken.py"
         "flowsignal.py"
-        "interpreter.py"
         "lexer.py"
         "music.py"
         "program.py"
