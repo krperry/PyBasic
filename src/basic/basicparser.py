@@ -61,6 +61,9 @@ class BASICArray:
             if int(dimensions[i]) != dimensions[i]:
                 raise SyntaxError("Fractional array size specified")
             dimensions[i] = int(dimensions[i])
+            
+        # Store original dimensions for bounds checking
+        self.original_dims = dimensions.copy()
 
         # MSBASIC: Initialize to Zero
         # MSBASIC: Overdim by one, as some dialects are 1 based and expect
@@ -699,21 +702,8 @@ class BASICParser:
             )
 
         # Assign to the specified array index
-        try:
-            if len(indexvars) == 1:
-                BASICarray.data[indexvars[0]] = right
-
-            elif len(indexvars) == 2:
-                BASICarray.data[indexvars[0]][indexvars[1]] = right
-
-            elif len(indexvars) == 3:
-                BASICarray.data[indexvars[0]][indexvars[1]][indexvars[2]] = right
-
-        except IndexError:
-            raise IndexError(
-                "Array index out of range in line " + str(self.__line_number)
-            )
-
+        self.__assign_array_val(BASICarray, indexvars, right)        
+        
     def __openstmt(self):
         """Parses an open statement, opens the indicated file and
         places the file handle into handle table
@@ -954,7 +944,7 @@ class BASICParser:
             variables.append(self.__operand_stack.pop())
 
             if variables[-1] < 20 or variables[-1] > 20000:  # out of hearing range.
-                if  variables[-1] != 0:
+                if variables[-1] != 0:
                     raise RuntimeError(
                         "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
                         + str(self.__line_number)
@@ -983,7 +973,7 @@ class BASICParser:
                     if (
                         variables[-1] < 20 or variables[-1] > 20000
                     ):  # out of hearing range.
-                        if variables[-1] !=0:
+                        if variables[-1] != 0:
                             raise RuntimeError(
                                 "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
                                 + str(self.__line_number)
@@ -1016,7 +1006,7 @@ class BASICParser:
             variables.append(self.__operand_stack.pop())
 
             if variables[-1] < 20 or variables[-1] > 20000:  # out of hearing range.
-                if variables[-1] !=0:
+                if variables[-1] != 0:
                     raise RuntimeError(
                         "Frequency ouside of 20 - 20,000 HZ dogs hate that.. Error  on line "
                         + str(self.__line_number)
@@ -1103,7 +1093,7 @@ class BASICParser:
     def __inputstmt(self):
         """Parses an input statement, extracts the input
         from the user and places the values into the
-        symbol table
+        symbol table. Now supports array elements.
 
         """
         self.__advance()  # Advance past INPUT token
@@ -1144,22 +1134,15 @@ class BASICParser:
             prompt = self.__operand_stack.pop()
             self.__consume(Token.SEMICOLON)
 
-        # Acquire the comma separated input variables
-        variables = []
+        # Parse the target variables (simple variables or array elements)
+        targets = []
         if not self.__tokenindex >= len(self.__tokenlist):
-            if self.__token.category != Token.NAME:
-                raise ValueError(
-                    "Expecting NAME in INPUT statement "
-                    + "in line "
-                    + str(self.__line_number)
-                )
-            variables.append(self.__token.lexeme)
-            self.__advance()  # Advance past variable
+            # Parse first target
+            targets.append(self.__parse_variable_target())
 
             while self.__token.category == Token.COMMA:
                 self.__advance()  # Advance past comma
-                variables.append(self.__token.lexeme)
-                self.__advance()  # Advance past variable
+                targets.append(self.__parse_variable_target())
 
         valid_input = False
         while not valid_input:
@@ -1169,48 +1152,57 @@ class BASICParser:
                     (self.__file_handles[filenum].readline().replace("\n", "")).replace(
                         "\r", ""
                     )
-                ).split(",", (len(variables) - 1))
+                ).split(",", (len(targets) - 1))
                 valid_input = True
             else:
-                if not self.__data._allcaps:
-                    inputvals = input(prompt).split(",", (len(variables) - 1))
-                else:
-                    inputvals = input(prompt).upper().split(",", (len(variables) - 1))
+                inputvals = input(prompt).split(",", (len(targets) - 1))
 
-            for variable in variables:
-                left = variable
+            try:
+                for target in targets:
+                    try:
+                        right = inputvals.pop(0)
 
-                try:
-                    right = inputvals.pop(0)
+                        if target["is_string"]:
+                            value = str(right)
+                        else:
+                            # Try to convert to numeric
+                            try:
+                                if "." in right:
+                                    value = float(right)
+                                else:
+                                    value = int(right)
+                            except ValueError:
+                                if not fileIO:
+                                    valid_input = False
+                                    print(
+                                        "Non-numeric input provided to a numeric variable - redo from start"
+                                    )
+                                    break
+                                raise ValueError(
+                                    "Non-numeric input provided to a numeric variable "
+                                    + "in line "
+                                    + str(self.__line_number)
+                                )
 
-                    if left.endswith("$"):
-                        self.__symbol_table[left] = str(right)
+                        # Assign value to target (validates array indices if needed)
+                        self.__assign_to_target(target, value)
                         valid_input = True
 
-                    elif not left.endswith("$"):
-                        try:
-                            if "." in right:
-                                self.__symbol_table[left] = float(right)
-
-                            else:
-                                self.__symbol_table[left] = int(right)
-
-                            valid_input = True
-
-                        except ValueError:
-                            if not fileIO:
-                                valid_input = False
-                            print(
-                                "Non-numeric input provided to a numeric variable - redo from start"
-                            )
+                    except IndexError:
+                        # No more input to process
+                        if not fileIO:
+                            valid_input = False
+                            print("Not enough values input - redo from start")
                             break
+                        raise RuntimeError(
+                            "Not enough input values in line " + str(self.__line_number)
+                        )
 
-                except IndexError:
-                    # No more input to process
-                    if not fileIO:
-                        valid_input = False
-                    print("Not enough values input - redo from start")
-                    break
+            except RuntimeError as e:
+                if "SUBSCRIPT ERROR" in str(e):
+                    raise e  # Re-raise subscript errors immediately
+                else:
+                    raise e
 
     def __restorestmt(self):
 
@@ -1226,55 +1218,72 @@ class BASICParser:
         """Parses a DATA statement"""
 
     def __readstmt(self):
-        """Parses a READ statement."""
+        """Parses a READ statement. Now supports array elements."""
 
         self.__advance()  # Advance past READ token
 
-        # Acquire the comma separated input variables
-        variables = []
+        # Parse the target variables (simple variables or array elements)
+        targets = []
         if not self.__tokenindex >= len(self.__tokenlist):
-            variables.append(self.__token.lexeme)
-            self.__advance()  # Advance past variable
+            # Parse first target
+            targets.append(self.__parse_variable_target())
 
             while self.__token.category == Token.COMMA:
                 self.__advance()  # Advance past comma
-                variables.append(self.__token.lexeme)
-                self.__advance()  # Advance past variable
+                targets.append(self.__parse_variable_target())
 
-        # Gather input from the DATA statement into the variables
-        for variable in variables:
+        # Process each target
+        for target in targets:
+            # Validate array indices BEFORE reading data (per specification)
+            if target["type"] == "array":
+                BASICarray = self.__symbol_table[target["array_name"]]
+                self.__validate_array_indices(BASICarray, target["indices"])
+
+            # Get data value
+            if len(self.__data_values) < 1:
+                try:
+                    self.__data_values = self.__data.readData(self.__line_number)
+                except RuntimeError as e:
+                    if "No DATA statements available" in str(e):
+                        raise RuntimeError(
+                            "? OUT OF DATA in line " + str(self.__line_number)
+                        )
+                    else:
+                        raise e
 
             if len(self.__data_values) < 1:
-                self.__data_values = self.__data.readData(self.__line_number)
+                raise RuntimeError("? OUT OF DATA in line " + str(self.__line_number))
 
-            left = variable
             right = self.__data_values.pop(0)
 
-            if left.endswith("$"):
-                # Python inserts quotes around input data
-                if isinstance(right, int):
-                    raise ValueError(
-                        "Non-string input provided to a string variable "
-                        + "in line "
-                        + str(self.__line_number)
-                    )
-
+            if target["is_string"]:
+                # String target - accept any data type as string
+                if isinstance(right, (int, float)):
+                    # Convert numeric data to string
+                    value = str(right)
                 else:
-                    self.__symbol_table[left] = right
-
-            elif not left.endswith("$"):
+                    # Already a string
+                    value = right
+            else:
+                # Numeric target - must be numeric data
                 try:
-                    numeric = float(right)
-                    if int(numeric) == numeric:
-                        numeric = int(numeric)
-                    self.__symbol_table[left] = numeric
-
+                    if isinstance(right, str):
+                        # Try to parse string as number
+                        numeric = float(right) if "." in right else int(right)
+                    else:
+                        numeric = float(right)
+                        if int(numeric) == numeric:
+                            numeric = int(numeric)
+                    value = numeric
                 except ValueError:
                     raise ValueError(
                         "Non-numeric input provided to a numeric variable "
                         + "in line "
                         + str(self.__line_number)
                     )
+
+            # Assign value to target
+            self.__assign_to_target(target, value)
 
     def __expr(self):
         """Parses a numerical expression consisting
@@ -1409,13 +1418,13 @@ class BASICParser:
 
             else:
                 # default variables values for undefined variables.
-                if self.__token.lexeme.endswith ("$"):
+                if self.__token.lexeme.endswith("$"):
                     # default string
                     self.__operand_stack.append("")
                 else:
-                    #default int
+                    # default int
                     self.__operand_stack.append(0)
-            
+
             self.__advance()
 
         elif self.__token.category == Token.LEFTPAREN:
@@ -1452,12 +1461,7 @@ class BASICParser:
         :return: The value at the indexed position in the array
 
         """
-        if BASICarray.dims != len(indexvars):
-            raise IndexError(
-                "Incorrect number of indices applied to array "
-                + "in line "
-                + str(self.__line_number)
-            )
+        self.__validate_array_indices(BASICarray, indexvars)
 
         # Fetch the value from the array
         try:
@@ -1471,11 +1475,123 @@ class BASICParser:
                 arrayval = BASICarray.data[indexvars[0]][indexvars[1]][indexvars[2]]
 
         except IndexError:
-            raise IndexError(
-                "Array index out of range in line " + str(self.__line_number)
-            )
+            raise RuntimeError("SUBSCRIPT ERROR in line " + str(self.__line_number))
 
         return arrayval
+
+    def __validate_array_indices(self, BASICarray, indexvars):
+        """Validates array indices and raises SUBSCRIPT ERROR if invalid
+
+        :param BASICarray: The BASICArray to validate against
+        :param indexvars: List of index values to validate
+        :raises RuntimeError: If indices are out of bounds
+        """
+        if BASICarray.dims != len(indexvars):
+            raise RuntimeError("SUBSCRIPT ERROR in line " + str(self.__line_number))
+
+        for i, index in enumerate(indexvars):
+            # Convert float to int (truncate toward zero)
+            if isinstance(index, float):
+                index = int(index)
+                indexvars[i] = index
+
+            # Check bounds - negative or greater than declared dimension
+            if index < 0 or index > BASICarray.original_dims[i]:
+                raise RuntimeError("SUBSCRIPT ERROR in line " + str(self.__line_number))
+
+    def __assign_array_val(self, BASICarray, indexvars, value):
+        """Assigns a value to an array element after validating indices
+
+        :param BASICarray: The BASICArray
+        :param indexvars: List of indices
+        :param value: Value to assign
+        """
+        self.__validate_array_indices(BASICarray, indexvars)
+
+        try:
+            if len(indexvars) == 1:
+                BASICarray.data[indexvars[0]] = value
+            elif len(indexvars) == 2:
+                BASICarray.data[indexvars[0]][indexvars[1]] = value
+            elif len(indexvars) == 3:
+                BASICarray.data[indexvars[0]][indexvars[1]][indexvars[2]] = value
+        except IndexError:
+            raise RuntimeError("SUBSCRIPT ERROR in line " + str(self.__line_number))
+
+    def __parse_variable_target(self):
+        """Parses a variable target which can be a simple variable or array element
+
+        :return: Dictionary with 'type' ('simple' or 'array'), 'name' (variable name),
+                 'indices' (list of index values for arrays), 'is_string' (boolean)
+        """
+        if self.__token.category != Token.NAME:
+            raise SyntaxError(
+                "Expecting variable name in line " + str(self.__line_number)
+            )
+
+        var_name = self.__token.lexeme
+        is_string = var_name.endswith("$")
+        self.__advance()
+
+        # Check if this is an array element
+        if self.__token.category == Token.LEFTPAREN:
+            # Array element target
+            array_name = var_name + "_array"
+
+            # Check if array exists
+            if array_name not in self.__symbol_table:
+                raise RuntimeError(
+                    "Array not dimensioned in line " + str(self.__line_number)
+                )
+
+            self.__advance()  # Past LEFTPAREN
+
+            # Parse index expressions
+            indexvars = []
+            self.__expr()
+            indexvars.append(self.__operand_stack.pop())
+
+            while self.__token.category == Token.COMMA:
+                self.__advance()  # Past comma
+                self.__expr()
+                indexvars.append(self.__operand_stack.pop())
+
+            self.__consume(Token.RIGHTPAREN)
+
+            return {
+                "type": "array",
+                "name": var_name,
+                "array_name": array_name,
+                "indices": indexvars,
+                "is_string": is_string,
+            }
+        else:
+            # Simple variable target
+            return {"type": "simple", "name": var_name, "is_string": is_string}
+
+    def __assign_to_target(self, target, value):
+        """Assigns a value to a target (simple variable or array element)
+
+        :param target: Target dictionary from __parse_variable_target
+        :param value: Value to assign
+        """
+        # Type checking
+        if target["is_string"] and not isinstance(value, str):
+            raise ValueError(
+                "Non-string input provided to a string variable in line "
+                + str(self.__line_number)
+            )
+        elif not target["is_string"] and isinstance(value, str):
+            raise ValueError(
+                "Non-numeric input provided to a numeric variable in line "
+                + str(self.__line_number)
+            )
+
+        if target["type"] == "simple":
+            self.__symbol_table[target["name"]] = value
+        else:  # array
+            BASICarray = self.__symbol_table[target["array_name"]]
+            self.__assign_array_val(BASICarray, target["indices"], value)
 
     def __compoundstmt(self):
         """Parses compound statements,
@@ -1844,7 +1960,7 @@ class BASICParser:
             return datetime.datetime.now().microsecond // 1000
 
         if category == Token.TIME_USECOND:
-            return datetime.datetime.now().microsecond 
+            return datetime.datetime.now().microsecond
 
         if category == Token.RNDINT:
 
