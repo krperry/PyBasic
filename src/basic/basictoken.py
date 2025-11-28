@@ -118,30 +118,33 @@ class BASICToken:
     SEMICOLON = 86  # SEMICOLON
     LEFT = 87  # LEFT$ function
     RIGHT = 88  # RIGHT$ function
-    SAY = 89  # Say function
-    BRAILLE = 90  # Braille function
-    DATE_DAY = 91  # System Day token
-    DATE_MONTH = 92  # System month token
-    DATE_YEAR = 93  # System year token
-    TIME_HOUR = 94  # System hour token
-    TIME_MINUTE = 95  # System minute
-    TIME_SECOND = 96  # System  second
-    TIME_MSECOND = 97  # System  milli second
-    TIME_USECOND = 98  # System  milli second
-    CLICK = 99
-    BEEP = 100
-    ALLCAPS = 101
-    UNITTYPE = 102
-    GET = 103  # single key input
-    RENAME = 104  # rename file
-    SOUND = 105  # play freq, duration, volume
-    SETSOUND = 106  # set next note in sound buffer
-    PLAY = 107  # play sound buffer from pos
-    ERASE = 108  # erase all variables
-    EMPTY = 109  # empty sound  buffer
-    SETPOS = 110  # set sound buffer play position
-    NOTES = 111  # return number of notes in buffer.
-    DELETE = 112  # DELETE a file
+    WHILE           = 89  # WHILE keyword
+    WEND            = 90  # WEND keyword
+    SAY = 91  # Say function
+    BRAILLE = 92  # Braille function
+    DATE_DAY = 93  # System Day token
+    DATE_MONTH = 94  # System month token
+    DATE_YEAR = 95  # System year token
+    TIME_HOUR = 96  # System hour token
+    TIME_MINUTE = 97  # System minute
+    TIME_SECOND = 98  # System  second
+    TIME_MSECOND = 99  # System  milli second
+    TIME_USECOND = 100  # System  milli second
+    CLICK = 101
+    BEEP = 102
+    ALLCAPS = 103
+    UNITTYPE = 104
+    GET = 105  # single key input
+    RENAME = 106  # rename file
+    SOUND = 107  # play freq, duration, volume
+    SETSOUND = 108  # set next note in sound buffer
+    PLAY = 109  # play sound buffer from pos
+    ERASE = 110  # erase all variables
+    EMPTY = 111  # empty sound  buffer
+    SETPOS = 112  # set sound buffer play position
+    NOTES = 113  # return number of notes in buffer.
+    DELETE = 114  # DELETE a file
+    
 
     # Displayable names for each token category
     catnames = [
@@ -235,6 +238,8 @@ class BASICToken:
         "SEMICOLON",
         "LEFT",
         "RIGHT",
+        "WHILE",
+        "WEND",
         "SAY",
         "BRAILLE",
         "DATE_DAY",
@@ -352,6 +357,8 @@ class BASICToken:
         "TAB": TAB,
         "LEFT$": LEFT,
         "RIGHT$": RIGHT,
+        "WHILE": WHILE,
+        "WEND": WEND,
         "SAY": SAY,
         "BRAILLE": BRAILLE,
         "DATE_DAY": DATE_DAY,

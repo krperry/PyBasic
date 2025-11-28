@@ -36,7 +36,6 @@ to three dimensions of fixed size.
 
 
 class BASICArray:
-
     def __init__(self, dimensions, elem_type):
         """Initialises the object with the specified
         number of dimensions. Maximum number of
@@ -61,7 +60,7 @@ class BASICArray:
             if int(dimensions[i]) != dimensions[i]:
                 raise SyntaxError("Fractional array size specified")
             dimensions[i] = int(dimensions[i])
-            
+
         # Store original dimensions for bounds checking
         self.original_dims = dimensions.copy()
 
@@ -113,7 +112,6 @@ statement when supplied.
 
 
 class BASICParser:
-
     def __init__(self, basicdata):
         # Symbol table to hold variable names mapped
         # to values
@@ -259,9 +257,16 @@ class BASICParser:
         how to branch if necessary, None otherwise
 
         """
-        if self.__token.category in [Token.FOR, Token.IF, Token.NEXT, Token.ON]:
-            return self.__compoundstmt()
 
+        if self.__token.category in [
+            Token.FOR,
+            Token.IF,
+            Token.NEXT,
+            Token.ON,
+            Token.WHILE,
+            Token.WEND,
+        ]:
+            return self.__compoundstmt()
         else:
             return self.__simplestmt()
 
@@ -702,8 +707,8 @@ class BASICParser:
             )
 
         # Assign to the specified array index
-        self.__assign_array_val(BASICarray, indexvars, right)        
-        
+        self.__assign_array_val(BASICarray, indexvars, right)
+
     def __openstmt(self):
         """Parses an open statement, opens the indicated file and
         places the file handle into handle table
@@ -1205,7 +1210,6 @@ class BASICParser:
                     raise e
 
     def __restorestmt(self):
-
         self.__advance()  # Advance past RESTORE token
 
         # Acquire the line number
@@ -1614,6 +1618,12 @@ class BASICParser:
         elif self.__token.category == Token.ON:
             return self.__ongosubstmt()
 
+        elif self.__token.category == Token.WHILE:
+            return self.__whilestmt()
+
+        elif self.__token.category == Token.WEND:
+            return self.__wendstmt()
+
     def __ifstmt(self):
         """Parses if-then-else
         statements
@@ -1658,7 +1668,6 @@ class BASICParser:
             if self.__token.category != Token.UNSIGNEDINT:
                 return FlowSignal(ftype=FlowSignal.EXECUTE)
             else:
-
                 self.__expr()
 
                 # Set up and return the flow signal
@@ -1790,6 +1799,42 @@ class BASICParser:
             )
 
         return FlowSignal(ftype=FlowSignal.LOOP_REPEAT, floop_var=loop_variable)
+
+    def __whilestmt(self):
+        """Parses WHILE loops
+
+        :return: The FlowSignal to indicate that
+        a WHILE loop start has been processed
+
+        """
+
+        self.__advance()  # Advance past WHILE token
+        self.__logexpr()  # Evaluate the condition
+
+        # Save result of expression
+        condition_result = self.__operand_stack.pop()
+
+        # Check if the condition is true
+        if condition_result:
+            # Condition is true, execute the loop body
+            return FlowSignal(ftype=FlowSignal.WHILE_BEGIN)
+        else:
+            # Condition is false, skip the loop
+            return FlowSignal(ftype=FlowSignal.WHILE_SKIP)
+
+    def __wendstmt(self):
+        """Processes a WEND statement that terminates
+        a WHILE loop
+
+        :return: A FlowSignal indicating that the loop
+        should repeat (return to WHILE)
+
+        """
+
+        self.__advance()  # Advance past WEND token
+
+        # Return signal to repeat the WHILE loop
+        return FlowSignal(ftype=FlowSignal.WHILE_REPEAT)
 
     def __ongosubstmt(self):
         """Process the ON-GOSUB statement
@@ -1963,7 +2008,6 @@ class BASICParser:
             return datetime.datetime.now().microsecond
 
         if category == Token.RNDINT:
-
             self.__consume(Token.LEFTPAREN)
 
             self.__expr()
