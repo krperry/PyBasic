@@ -118,33 +118,33 @@ class BASICToken:
     SEMICOLON = 86  # SEMICOLON
     LEFT = 87  # LEFT$ function
     RIGHT = 88  # RIGHT$ function
-    WHILE           = 89  # WHILE keyword
-    WEND            = 90  # WEND keyword
-    SAY = 91  # Say function
-    BRAILLE = 92  # Braille function
-    DATE_DAY = 93  # System Day token
-    DATE_MONTH = 94  # System month token
-    DATE_YEAR = 95  # System year token
-    TIME_HOUR = 96  # System hour token
-    TIME_MINUTE = 97  # System minute
-    TIME_SECOND = 98  # System  second
-    TIME_MSECOND = 99  # System  milli second
-    TIME_USECOND = 100  # System  milli second
-    CLICK = 101
-    BEEP = 102
-    ALLCAPS = 103
-    UNITTYPE = 104
-    GET = 105  # single key input
-    RENAME = 106  # rename file
-    SOUND = 107  # play freq, duration, volume
-    SETSOUND = 108  # set next note in sound buffer
-    PLAY = 109  # play sound buffer from pos
-    ERASE = 110  # erase all variables
-    EMPTY = 111  # empty sound  buffer
-    SETPOS = 112  # set sound buffer play position
-    NOTES = 113  # return number of notes in buffer.
-    DELETE = 114  # DELETE a file
-    
+    WHILE = 89  # WHILE keyword
+    WEND = 90  # WEND keyword
+    RENUMBER = 91  # RENUMBER command    
+    SAY = 92  # Say function
+    BRAILLE = 93  # Braille function
+    DATE_DAY = 94  # System Day token
+    DATE_MONTH = 95  # System month token
+    DATE_YEAR = 96  # System year token
+    TIME_HOUR = 97  # System hour token
+    TIME_MINUTE = 98  # System minute
+    TIME_SECOND = 99  # System  second
+    TIME_MSECOND = 100  # System  milli second
+    TIME_USECOND = 101  # System  milli second
+    CLICK = 102
+    BEEP = 103
+    ALLCAPS = 104
+    UNITTYPE = 105
+    GET = 106  # single key input
+    RENAME = 107  # rename file
+    SOUND = 108  # play freq, duration, volume
+    SETSOUND = 109  # set next note in sound buffer
+    PLAY = 110  # play sound buffer from pos
+    ERASE = 111  # erase all variables
+    EMPTY = 112  # empty sound  buffer
+    SETPOS = 113  # set sound buffer play position
+    NOTES = 114  # return number of notes in buffer.
+    DELETE = 115  # DELETE a file
 
     # Displayable names for each token category
     catnames = [
@@ -240,6 +240,7 @@ class BASICToken:
         "RIGHT",
         "WHILE",
         "WEND",
+        "RENUMBER",
         "SAY",
         "BRAILLE",
         "DATE_DAY",
@@ -249,8 +250,8 @@ class BASICToken:
         "TIME_MINUTE",
         "TIME_SECOND",
         "TIME_MSECOND",
-         "TIME_USECOND",
-           "CLICK",
+        "TIME_USECOND",
+        "CLICK",
         "BEEP",
         "ALLCAPS",
         "UNITTYPE",
@@ -359,6 +360,7 @@ class BASICToken:
         "RIGHT$": RIGHT,
         "WHILE": WHILE,
         "WEND": WEND,
+        "RENUMBER": RENUMBER,
         "SAY": SAY,
         "BRAILLE": BRAILLE,
         "DATE_DAY": DATE_DAY,
@@ -443,7 +445,6 @@ class BASICToken:
     }
 
     def __init__(self, column, category, lexeme):
-
         self.column = column  # Column in which token starts
         self.category = category  # Category of the token
         self.lexeme = lexeme  # Token in string form

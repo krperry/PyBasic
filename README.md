@@ -148,6 +148,38 @@ The program may be erased entirely from memory using the **NEW** command:
 >
 ```
 
+Program line numbers can be renumbered using the **RENUMBER** command:
+
+```
+> 10 A = 1
+> 20 IF A = 1 THEN 100
+> 30 GOTO 10
+> 100 PRINT "DONE"
+> LIST
+10 A = 1
+20 IF A = 1 THEN 100
+30 GOTO 10
+100 PRINT "DONE"
+> RENUMBER 100,100
+Program renumbered
+> LIST
+100 A = 1
+200 IF A = 1 THEN 400
+300 GOTO 100
+400 PRINT "DONE"
+>
+```
+
+The RENUMBER command supports various parameter combinations:
+
+* **RENUMBER** - Renumber whole program starting at 10 with increments of 10
+* **RENUMBER 100** - Start renumbering at 100 with increments of 10
+* **RENUMBER 50,5** - Start at 50 with increments of 5
+* **RENUMBER 100,10,200,300** - Renumber only lines 200-300, starting at 100
+* **RENUMBER ,,200** - Renumber lines 200 and above using defaults
+
+The RENUMBER command automatically updates line number references in GOTO, GOSUB, IF...THEN, ON...GOTO, ON...GOSUB, and RESTORE statements while preserving line numbers in string literals and comments.
+
 Finally, it is possible to terminate the interpreter by issuing the **EXIT** command:
 
 ```
@@ -1234,9 +1266,7 @@ control flow changes to the Program object, is used consistently throughout the 
 
 ## Open issues
 
-* It is not possible to renumber a program. This would require considerable extra functionality.
 * Negative values are printed with a space (e.g. '- 5') in program listings because of tokenization. This does not affect functionality.
-* User input values cannot be directly assigned to array variables in an **INPUT** or **READ** statement
 * Strings representing numbers (e.g. "10") can actually be assigned to numeric variables in **INPUT** and **READ** statements without an
 error, Python will silently convert them to integers.
 
