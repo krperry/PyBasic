@@ -1264,9 +1264,8 @@ a subroutine call, or program termination. This paradigm of using the parser to 
 object to make control flow decisions and to track execution, and a signalling mechanism to allow the parser to signal
 control flow changes to the Program object, is used consistently throughout the implementation.
 
-## Open issues
+## Python Basic Feature
 
-* Negative values are printed with a space (e.g. '- 5') in program listings because of tokenization. This does not affect functionality.
 * Strings representing numbers (e.g. "10") can actually be assigned to numeric variables in **INPUT** and **READ** statements without an
 error, Python will silently convert them to integers.
 
