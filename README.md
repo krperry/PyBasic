@@ -213,7 +213,7 @@ Program terminated
 ### Statement structure
 
 As per usual in old school BASIC, all program statements must be prefixed with a line number which indicates the order in which the
-statements may be executed. There is no renumber command to allow all line numbers to be modified. A statement may be modified or
+statements may be executed. A statement may be modified or
 replaced by re-entering a statement with the same line number:
 
 ```
@@ -279,7 +279,7 @@ Note that the index of each dimension always starts at *zero*, but for
 compatibility with some basic dialects the bounds of each dimension will be
 expanded by one to enable element access including the len. So in the above example, 
 valid index values for array *A* will be *0, 1*, *2* or *3*
-for each dimension. Arrays may have a maximum of three dimensions. Numeric arrays will
+for each dimension. Arrays may have a maximum of ten dimensions. Numeric arrays will
 be initialised with each element set to zero, while string arrays will be initialised
 with each element set to the empty string "".
 
