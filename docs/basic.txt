@@ -338,7 +338,7 @@ expects no arguments.  the end command is not necessary if the
 program ends at the end of the file.
 
 
-fget
+fget # todo
 
      The fget command gets a character from a file and puts it in
 the specified character string.  It expects two arguments.  the
@@ -371,7 +371,7 @@ of the file has been reached, then the program will stop with an
 "end of file" error, or the err variable will be set to 24.
 
 
-finput
+finput # todo 
 
      The finput command gets a line of text from a file.  It then
 puts the text in the specified variable.  1The finput command
@@ -504,7 +504,7 @@ write-protected, the program will hault with a "file is
 write-protected" error, or the err variable will be set to 25.
 
 
-Get
+Get # todo combine with fget
 
      The get command gets one keystroke from the keyboard, and puts
 it in the specified variable.  The variable must be a character
@@ -588,7 +588,7 @@ example program:
    statement in line 40 is executed.
 
 
-input
+input # todo combine with finput
 
 
      The input command inputs a line of text, and puts its value in
@@ -648,19 +648,10 @@ lf
 
      The lf command is used to turn on and off return line-feed
 pairs.  It expects no arguments.  This feature defaults to off,
-which means that normally, when text is outputted to a file or to
-the serial port, each line of text will end with a return character
-only.  If you issue an lf command, then any line of text outputted
-to the serial port or to a file will end with a return line-feed
+which means that normally, when text is output each line of text will end with a return character.
+If a lf command, is issued then any line of text output  ends with a return line-feed
 pair.  The lf command toggles this feature on and off.  
 
-
-off
-
-     The off command turns off the speech power in the Braille 'N
-Speak, Type 'N Speak, or Braille Lite.  It expects no arguments. 
-The power is turned back on the next time that something is spoken,
-or a sound is made.
 
 
 on
@@ -756,54 +747,6 @@ stop with a "bad file name" error, or the err variable will be set
 to 19.  If the file number given is not 1, 2, or 3, the program
 will hault with an "invallid file number" error, or the err
 variable will be set to 18.
-
-
-pprint
-
-     The pprint command is used to send text to the parallel port
-on the Type 'N Speak and Braille Lite.  It works identically to the
-print command, except that it sends it's output to the parallel
-port.  If you attempt to use this command on a Braille 'N Speak,
-the program will stop with a "unit has no parallel port" error, or
-if error trapping has been enabled with an "on error" statement,
-then the err variable will be set to 32.
-
-example:
-
-pprint "This is a test."
-   Sends the text "This is a test." to the parallel port
-
-     If there is a printer time-out, the program will stop with a
-"printer time-out error", or the err variable will be set to 33.
-
-
-print
-
-the print command makes the Braille 'N Speak or Type 'N Speak say
-something.  The Braille Lite will both speak and display what is
-being printed.  The print command can be used to display messages,
-variables, the results of expressions, or a combination thereof.
-
-examples
-
-print "Hello."
-   says the word hello
-print a+3
-   says the sum of a and 3
-
-     The print command will accept multiple arguments.  Thus, the
-following command syntax if legal.
-
-print "hello", 1+3
-
-     Instead of using the print command, you can use the short form
-of it, the question mark.
-
-example:
-
-? "hello"
-   this is the same as
-   print "hello"
 
 
 read
@@ -936,13 +879,13 @@ following command syntax is legal.
 say "hello", 2+3
 
 
-sclear
+sclear # todo make just clear or fix
 
      The sclear command clears the sound buffer.  It expects no
 arguments.
 
 
-setfreq
+setfreq # todo
 
      The setfreq command allows you to set the frequency of the
 speech synthesizer in the Braille 'N Speak, Type 'N Speak, or
@@ -961,7 +904,7 @@ setfreq 10
 returned by the s.freq function.
 
 
-setpitch
+setpitch # todo
 
 
      The setpitch command allows you to set the pitch of the speech
@@ -984,7 +927,7 @@ problem in the Braille 'N Speak, Type 'N Speak, and Braille Lite
 firmware.
 
 
-setpos
+setpos 
 
      The setpos command sets the position in the sound buffer at
 which to begin playing.  It expects one argument, which is the
@@ -1005,7 +948,7 @@ by the num.notes function.
 
 
 
-setrate
+setrate # todo
 
      The setrate command allows you to set the rate of the speech
 synthesizer in the Braille 'N Speak, Type 'N Speak, or Braille
@@ -1030,7 +973,7 @@ print speech.rate
 not affect the rate of the speech synthesizer.
 
 
-setsound
+setsound 
 
      The setsound command stores one note in the sound buffer.  It
 expects two arguments.  The first is the frequency of the note in
@@ -1059,7 +1002,7 @@ more than 128 notes in it, the program will stop with a "Sound
 buffer is full" error, or the err variable will be set to 34.
 
 
-setvol
+setvol # todo change to setvolume if we are using this or maybe make set and add the options
 
      The setvol command allows you to set the volume of the speech
 synthesizer in the Braille 'N Speak, Type 'N Speak, or Braille
@@ -1083,52 +1026,6 @@ print speech.volume
 
      Note that changing the value in the speech.volume variable
 will not affect the volume of the speech synthesizer.
-
-
-sget
-
-     The sget command gets a character from the serial port, and
-stores it in the specified variable.  the variable must be a
-character string, otherwise, the program will hault with a "type
-mismatch" error, or if error trapping is on, the err variable will
-be set to 3.  The sget command polls the serial port for five
-seconds.  If it receives nothing, the program will stop with a
-"nothing available from serial port error", or the err variable
-will be set to 27.
-
-example:
-
-sget c$
-   gets a character from the serial port and stores it in c$
-
-     The sget command will accept multiple arguments.  Thus, the
-following command syntax is legal.
-
-sget c$, d$
-
-
-sinput
-
-     The sinput command gets a line of text from the serial port
-and stores it in the specified variable.  The sinput command will
-poll the serial port for five seconds.  If it receives nothing, the
-program will hault with a "nothing available from serial port"
-error, or if error trapping is enabled, the err variable will be
-set to 27.
-
-examples:
-
-sinput i
-   gets a line of text from the serial port, and stores it as a   
-   numeric value in a variable called i
-sinput a$
-   gets a line of text from the serial port, and stores it as a   
-   character string in a variable called a$
-
-     The sinput command will accept multiple arguments.  thus, the
-following command syntax is legal.
-
-sinput a$, b, c$
 
 
 sound
@@ -1174,33 +1071,13 @@ sound 0,10
 command, referr to the file called music.txt.
 
 
-splay
+play
 
-     The splay command plays the next note in the sound buffer.  It
+     The play command plays the next note in the sound buffer.  It
 expects no arguments.  If there aren't any notes left to play in
 the sound buffer, then the program will hault with a "End of sound
 data" error, or if error trapping has been enabled with an "on
 error" statement, then the err variable will be set to 31.
-
-
-sprint
-
-     The sprint command sends text out the serial port.  If there
-is no response after five seconds, the program will stop with a
-"can't write to serial port" error, or if error trapping is
-enabled, the err variable will be set to 26.
-
-example:
-
-sprint "hello"
-   sends the word hello out the serial port
-sprint 3*3
-   sends the result of the expression 3*3 out the serial port
-
-     The sprint command will accept multiple arguments.  Thus, the
-following command syntax is legal.
-
-sprint "hello", 3+3
 
 
 wend
@@ -1268,39 +1145,39 @@ character of the string passed to it.  For example asc("About")
 would be equal to 65, which is the ASCII value for a capital A.
 
 
-chr$
+chr$ 
 
      The chr$ function returns a character string containing the
 character whose ASCII value is passed to it.
 
 examples:
 
-chr$(65)
+chr$(65) 
    returns "A"
 chr$(13)
    returns string containing carriadge return, (ASCII 13)
 
 
 
-date.day
+date_day
 
      The date.day function returns the current day of the month. 
 It expects no arguments or parentheses.
 
 
-date.mon
+date_month
 
      The date.mon function returns the current month.  It expects
 no arguments or parentheses.
 
 
-date.year
+date_year
 
      The date.year function returns the last two digits of the
 current year.  It expects no arguments or parentheses.
 
 
-grade2$
+grade2$ # todo
 
      The grade2$ function backtranslates the string passed to it
 and returns the result.  Therefore, grade2$("pap}") would return
@@ -1355,7 +1232,7 @@ at the second letter in the a$ string, and reads two letters.  This
 program would print "el".
 
 
-num.notes
+num.notes # todo
 
      The num.notes function returns the number of notes currently
 stored in the sound buffer.  It expects no arguments or
@@ -1423,25 +1300,26 @@ passed to it.  Therefore, str$("280") = 280.
 
 
 
-time.hour
+time_hour
 
      The time.hour function returns the current hour in twenty-four
 hour format.  For example, if it were 3:15 P.M., time.hour would
 return 15.  Time.hour expects no arguments or parentheses.
 
 
-time.min
+time_minute
 
      The time.min functions returns the current minute.  It expects
 no arguments or parentheses.
 
 
-time.sec
+time_second
 
      The time.sec function returns the current second.  It expects
 no arguments or parentheses.
 
 
+# todo time_usecond
 
 val
 
@@ -1453,7 +1331,7 @@ expressions.  For example, if a string named a$ contained the text
 "2*3", val(a$) would equal 6.
 
 
-unit.type
+unit.type # todo support two devices
 
      The unit.type function returns the type of the unit being run.
 
@@ -1465,7 +1343,7 @@ The types are as follows:
 
 
 
-List of Error Codes
+List of Error Codes # todo keep  or not fix or not
 
 
 1-- syntax error
@@ -1488,14 +1366,10 @@ List of Error Codes
 23-- can't create file
 24-- end of file
 25-- file is write-protected error
-26-- can't write to serial port error
-27-- nothing available from serial port error
 28-- file already exists error
 29-- break
 30-- re-dimmed array error
 31-- End of sound data error
-32-- unit has no parallel port error
-33- printer time-out error
 34-- sound buffer is full error
 
 
