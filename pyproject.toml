@@ -10,9 +10,18 @@ dependencies = ["pygame>=2.6.1", "numpy>=2.2.6"]
 [project.scripts]
 basic = "basic.basic:main"
 dc = "disassembler.dc:main"
-basic-bns = "basic-bns.basic-bns:main"
+basic-bns = "basic_bns.basic_bns_runner:main"
 
 
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
+
+[tool.pdm]
+package-dir = "src"
+
+[tool.pdm.scripts]
+# Development scripts that work with the editable install
+basic = {call = "basic.basic:main"}
+dc = {call = "disassembler.dc:main"}
+basic-bns = {call = "basic_bns.basic_bns_runner:main"}

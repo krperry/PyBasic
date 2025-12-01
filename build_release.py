@@ -18,7 +18,7 @@ from pathlib import Path
 RELEASE_DIR = "release"
 PROJECT_ROOT = Path(__file__).parent
 SRC_DIR = PROJECT_ROOT / "src"
-BASIC_BNS_DIR = SRC_DIR / "basic-bns"
+BASIC_BNS_DIR = SRC_DIR / "basic_bns"
 
 def clean_release_dir():
     """Clean the release directory"""
@@ -119,7 +119,7 @@ import os
 sys.path.append(r"{SRC_DIR}")
 
 a = Analysis(
-    [r"{BASIC_BNS_DIR / 'basic-bns.py'}"],
+    [r"{BASIC_BNS_DIR / 'basic_bns_runner.py'}"],
     pathex=[r"{SRC_DIR}"],
     binaries=[],
     datas=[],
