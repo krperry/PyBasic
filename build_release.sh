@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RELEASE_DIR="$PROJECT_ROOT/release"
 SRC_DIR="$PROJECT_ROOT/src"
-BASIC_BNS_DIR="$SRC_DIR/basic-bns"
+BASIC_BNS_DIR="$SRC_DIR/basic_bns"
 
 echo -e "${GREEN}=== PyBasic Release Builder (Linux/Unix/macOS) ===${NC}"
 echo "Project root: $PROJECT_ROOT"
@@ -81,15 +81,26 @@ clean_release_dir() {
 install_requirements() {
     print_info "Installing/checking build requirements..."
     
+    # Try to use virtual environment or install in user space
+    if [ -d "test_env" ]; then
+        print_info "Using existing virtual environment"
+        source test_env/bin/activate
+        PYTHON_CMD="python"
+    fi
+    
     # Check if requirements file exists
     if [ ! -f "$PROJECT_ROOT/requirements-build.txt" ]; then
         print_warning "requirements-build.txt not found, installing PyInstaller manually"
-        $PYTHON_CMD -m pip install pyinstaller pygame numpy
+        $PYTHON_CMD -m pip install --user pyinstaller pygame numpy 2>/dev/null || \
+        $PYTHON_CMD -m pip install pyinstaller pygame numpy --break-system-packages 2>/dev/null || \
+        print_warning "Failed to install requirements - continuing anyway"
     else
-        $PYTHON_CMD -m pip install -r "$PROJECT_ROOT/requirements-build.txt"
+        $PYTHON_CMD -m pip install --user -r "$PROJECT_ROOT/requirements-build.txt" 2>/dev/null || \
+        $PYTHON_CMD -m pip install -r "$PROJECT_ROOT/requirements-build.txt" --break-system-packages 2>/dev/null || \
+        print_warning "Failed to install requirements - continuing anyway"
     fi
     
-    print_status "Requirements installed"
+    print_status "Requirements installation attempted"
 }
 
 # Copy basic script and dependencies in flat structure
@@ -99,7 +110,7 @@ copy_basic_script() {
     # Copy and modify basic.py to create executable 'basic' script
     if [ -f "$SRC_DIR/basic/basic.py" ]; then
         # Copy the file and modify import paths, make it executable
-        sed 's/from basic\./from basiclib\./g; s/import basic\./import basiclib\./g' "$SRC_DIR/basic/basic.py" > "$RELEASE_DIR/basic"
+        sed '1s|#! /usr/bin/python|#!/usr/bin/env python3|; s/from basic\./from basiclib\./g; s/import basic\./import basiclib\./g' "$SRC_DIR/basic/basic.py" > "$RELEASE_DIR/basic"
         chmod +x "$RELEASE_DIR/basic"
         print_status "Created executable 'basic' script in release root"
     else
@@ -146,9 +157,9 @@ copy_basic_script() {
 build_basic_bns_executable() {
     print_info "Building basic-bns executable..."
     
-    # Check if basic-bns.py exists
-    if [ ! -f "$BASIC_BNS_DIR/basic-bns.py" ]; then
-        print_error "basic-bns.py not found at $BASIC_BNS_DIR/basic-bns.py"
+    # Check if basic_bns_runner.py exists
+    if [ ! -f "$BASIC_BNS_DIR/basic_bns_runner.py" ]; then
+        print_error "basic_bns_runner.py not found at $BASIC_BNS_DIR/basic_bns_runner.py"
         exit 1
     fi
     
@@ -162,7 +173,7 @@ import os
 sys.path.append('$SRC_DIR')
 
 a = Analysis(
-    ['$BASIC_BNS_DIR/basic-bns.py'],
+    ['$BASIC_BNS_DIR/basic_bns_runner.py'],
     pathex=['$SRC_DIR'],
     binaries=[],
     datas=[],
