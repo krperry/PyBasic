@@ -126,6 +126,7 @@ copy_basic_script() {
     local basic_files=(
         "__init__.py"
         "basicparser.py"
+        "basichost.py"
         "basictoken.py"
         "flowsignal.py"
         "lexer.py"
@@ -323,8 +324,8 @@ release/
 ├── basiclib/             # Supporting modules for basic
 │   ├── __init__.py
 │   ├── basicparser.py
+│   ├── basichost.py
 │   ├── basictoken.py
-│   ├── interpreter.py
 │   └── ... (other modules)
 ├── examples/             # Regular BASIC programs (.bas files)
 ├── bt-examples/          # Additional BASIC examples

@@ -57,6 +57,7 @@ def copy_basic_script(release_path):
     basic_files = [
         "__init__.py",
         "basicparser.py",
+        "basichost.py",
         "basictoken.py",
         "flowsignal.py",
         "lexer.py",
@@ -280,6 +281,7 @@ release/
 ├── basiclib/             # Supporting modules (renamed from basic/)
 │   ├── __init__.py
 │   ├── basicparser.py
+│   ├── basichost.py
 │   ├── basictoken.py
 │   ├── flowsignal.py
 │   ├── lexer.py
