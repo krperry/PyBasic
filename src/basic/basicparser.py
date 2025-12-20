@@ -21,7 +21,7 @@ import math
 import datetime
 import random
 from basic.music import sound, click, beep
-
+from basic.basichost import host
 
 try:
     from time import ticks_ms as monotonic
@@ -86,7 +86,7 @@ class BASICArray:
         self.data = create_nested_array(self.dims, 0)
 
     def pretty_print(self):
-        print(str(self.data))
+        host.print(str(self.data))
 
 
 """Implements a BASIC parser that parses a single
@@ -121,7 +121,7 @@ class BASICParser:
         self.last_flowsignal = None
 
         # Set to keep track of print column across multiple print statements
-        self.__prnt_column = 0
+        self.stm_prnt_column = 0
 
         # file handle list
         self.__file_handles = {}
@@ -282,11 +282,11 @@ class BASICParser:
             return None
 
         elif self.__token.category == Token.SAY:
-            self.__printstmt()
+            self.__saystmt()
             return None
 
         elif self.__token.category == Token.BRAILLE:
-            self.__printstmt()
+            self.__braillestmt()
             return None
 
         elif self.__token.category == Token.LET:
@@ -383,14 +383,15 @@ class BASICParser:
 
     def __printstmt(self):
         """Parses a PRINT statement, causing
-        the value that is on top of the
-        operand stack to be printed on
-        the screen.
+        the accumulated values to be printed
+        in a single call.
 
         """
         self.__advance()  # Advance past PRINT token
 
         fileIO = False
+        filenum = None
+        
         if self.__token.category == Token.HASH:
             fileIO = True
 
@@ -416,79 +417,125 @@ class BASICParser:
             ):
                 self.__consume(Token.COMMA)
 
+        # Collect all output parts
+        output_parts = []
+        add_newline = True
+
         # Check there are items to print
         if not self.__tokenindex >= len(self.__tokenlist):
             prntTab = self.__token.category == Token.TAB
             self.__logexpr()
 
             if prntTab:
-                if self.__prnt_column >= len(self.__operand_stack[-1]):
-                    if fileIO:
-                        self.__file_handles[filenum].write("\n")
-                    else:
-                        print()
-                    self.__prnt_column = 0
+                if self.stm_prnt_column >= len(self.__operand_stack[-1]):
+                    output_parts.append("\n")
+                    self.stm_prnt_column = 0
 
-                current_pr_column = len(self.__operand_stack[-1]) - self.__prnt_column
-                self.__prnt_column = len(self.__operand_stack.pop()) - 1
+                current_pr_column = len(self.__operand_stack[-1]) - self.stm_prnt_column
+                self.stm_prnt_column = len(self.__operand_stack.pop()) - 1
                 if current_pr_column > 1:
-                    if fileIO:
-                        self.__file_handles[filenum].write(
-                            " " * (current_pr_column - 1)
-                        )
-                    else:
-                        print(" " * (current_pr_column - 1), end="")
+                    output_parts.append(" " * (current_pr_column - 1))
             else:
-                self.__prnt_column += len(str(self.__operand_stack[-1]))
-                if fileIO:
-                    self.__file_handles[filenum].write(
-                        "%s" % (self.__operand_stack.pop())
-                    )
-                else:
-                    print(self.__operand_stack.pop(), end="")
+                value = str(self.__operand_stack.pop())
+                self.stm_prnt_column += len(value)
+                output_parts.append(value)
 
             while self.__token.category == Token.SEMICOLON:
                 if self.__tokenindex == len(self.__tokenlist) - 1:
-                    # If a semicolon ends this line, don't print
+                    # If a semicolon ends this line, don't add
                     # a newline.. a-la ms-basic
                     self.__advance()
-                    return
+                    add_newline = False
+                    break
                 self.__advance()
                 prntTab = self.__token.category == Token.TAB
                 self.__logexpr()
 
                 if prntTab:
-                    if self.__prnt_column >= len(self.__operand_stack[-1]):
-                        if fileIO:
-                            self.__file_handles[filenum].write("\n")
-                        else:
-                            print()
-                        self.__prnt_column = 0
+                    if self.stm_prnt_column >= len(self.__operand_stack[-1]):
+                        output_parts.append("\n")
+                        self.stm_prnt_column = 0
                     current_pr_column = (
-                        len(self.__operand_stack[-1]) - self.__prnt_column
+                        len(self.__operand_stack[-1]) - self.stm_prnt_column
                     )
-                    if fileIO:
-                        self.__file_handles[filenum].write(
-                            " " * (current_pr_column - 1)
-                        )
-                    else:
-                        print(" " * (current_pr_column - 1), end="")
-                    self.__prnt_column = len(self.__operand_stack.pop()) - 1
+                    output_parts.append(" " * (current_pr_column - 1))
+                    self.stm_prnt_column = len(self.__operand_stack.pop()) - 1
                 else:
-                    self.__prnt_column += len(str(self.__operand_stack[-1]))
-                    if fileIO:
-                        self.__file_handles[filenum].write(
-                            "%s" % (self.__operand_stack.pop())
-                        )
-                    else:
-                        print(self.__operand_stack.pop(), end="")
+                    value = str(self.__operand_stack.pop())
+                    self.stm_prnt_column += len(value)
+                    output_parts.append(value)
 
-        # Final newline
-        if fileIO:
-            self.__file_handles[filenum].write("\n")
-        else:
-            print()
-        self.__prnt_column = 0
+        # Add final newline if needed
+        if add_newline:
+            output_parts.append("\n")
+            self.stm_prnt_column = 0
+
+        # Output everything at once
+        if output_parts:
+            output_text = ''.join(output_parts)
+            if fileIO:
+                self.__file_handles[filenum].write(output_text)
+            else:
+                host.print(output_text, end="")
+
+    def __saystmt(self):
+        """Parses a SAY statement, causing
+        the accumulated values to be spoken
+        in a single call.
+
+        """
+        self.__advance()  # Advance past SAY token
+
+        # Collect all arguments to speak at once
+        output_parts = []
+
+        # Check there are items to say
+        if not self.__tokenindex >= len(self.__tokenlist):
+            self.__logexpr()
+            output_parts.append(str(self.__operand_stack.pop()))
+
+            while self.__token.category == Token.SEMICOLON:
+                if self.__tokenindex == len(self.__tokenlist) - 1:
+                    # If a semicolon ends this line, don't add final space
+                    self.__advance()
+                    break
+                self.__advance()
+                self.__logexpr()
+                output_parts.append(str(self.__operand_stack.pop()))
+
+        # Say all parts at once
+        if output_parts:
+            host.say(''.join(output_parts))
+
+    def __braillestmt(self):
+        """Parses a BRAILLE statement, causing
+        the accumulated values to be displayed
+        in braille in a single call.
+
+        """
+        self.__advance()  # Advance past BRAILLE token
+
+        # Collect all arguments to display at once
+        output_parts = []
+
+        # Check there are items to display in braille
+        if not self.__tokenindex >= len(self.__tokenlist):
+            self.__logexpr()
+            output_parts.append(str(self.__operand_stack.pop()))
+
+            while self.__token.category == Token.SEMICOLON:
+                if self.__tokenindex == len(self.__tokenlist) - 1:
+                    # If a semicolon ends this line, don't add final space
+                    self.__advance()
+                    break
+                self.__advance()
+                self.__logexpr()
+                output_parts.append(str(self.__operand_stack.pop()))
+
+        # Display all parts at once in braille
+        if output_parts:
+            host.braille(''.join(output_parts))
+
 
     def __letstmt(self):
         """Parses a LET statement,
@@ -1163,7 +1210,7 @@ class BASICParser:
                             except ValueError:
                                 if not fileIO:
                                     valid_input = False
-                                    print(
+                                    host.print(
                                         "Non-numeric input provided to a numeric variable - redo from start"
                                     )
                                     break
@@ -1181,7 +1228,7 @@ class BASICParser:
                         # No more input to process
                         if not fileIO:
                             valid_input = False
-                            print("Not enough values input - redo from start")
+                            host.print("Not enough values input - redo from start")
                             break
                         raise RuntimeError(
                             "Not enough input values in line " + str(self.__line_number)

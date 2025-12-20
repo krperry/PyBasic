@@ -24,7 +24,7 @@ from basic.basictoken import BASICToken as Token
 from basic.lexer import Lexer
 from basic.program import Program
 from sys import stderr
-
+from basic.basichost import host
 
 def run_interpreter(program=None):
     """Run the interactive BASIC interpreter."""
@@ -32,9 +32,9 @@ def run_interpreter(program=None):
     if program is None:
         program = Program()
 
-    print("PyBASIC Interpreter")
-    print("Type EXIT to quit")
-    print()
+    host.print("PyBASIC Interpreter")
+    host.print("Type EXIT to quit")
+    host.print()
 
     # Continuously accept user input and act on it until
     # the user enters 'EXIT'
@@ -72,7 +72,7 @@ def run_interpreter(program=None):
                         program.execute()
 
                     except KeyboardInterrupt:
-                        print("Program terminated")
+                        host.print("Program terminated")
 
                 # List the program
                 elif tokenlist[0].category == Token.LIST:
@@ -97,12 +97,12 @@ def run_interpreter(program=None):
                 # Save the program to disk
                 elif tokenlist[0].category == Token.SAVE:
                     program.save(tokenlist[1].lexeme)
-                    print("Program written to file")
+                    host.print("Program written to file")
 
                 # Load the program from disk
                 elif tokenlist[0].category == Token.LOAD:
                     program.load(tokenlist[1].lexeme)
-                    print("Program read from file")
+                    host.print("Program read from file")
 
                 # Delete the program from memory
                 elif tokenlist[0].category == Token.NEW:
@@ -144,22 +144,22 @@ def run_interpreter(program=None):
                             old_end = args[3] if len(args) > 3 and args[3] is not None else None
                             
                             program.renumber(new_start, increment, old_start, old_end)
-                        print("Program renumbered")
+                        host.print("Program renumbered")
                     except Exception as e:
-                        print(f"RENUMBER error: {e}", file=stderr)
+                        host.print(f"RENUMBER error: {e}", file=stderr)
                     
 
                 # Unrecognised input
                 else:
-                    print("Unrecognised input", file=stderr)
+                    host.print("Unrecognised input", file=stderr)
                     for token in tokenlist:
-                        token.print_lexeme()
-                    print(flush=True)
+                        host.token.print_lexeme()
+                    host.print(flush=True)
 
         # Trap all exceptions so that interpreter
         # keeps running
         except Exception as e:
-            print(e, file=stderr, flush=True)
+            host.print(e, file=stderr, flush=True)
 
 
 def run_program(filename):
@@ -170,7 +170,7 @@ def run_program(filename):
 
     # Check if the file exists
     if not os.path.exists(filename):
-        print(f"Error: File '{filename}' does not exist.")
+        host.print(f"Error: File '{filename}' does not exist.")
         sys.exit(1)
 
     # Initialize the lexer and program
@@ -184,7 +184,7 @@ def run_program(filename):
         program.execute()
         return program
     except Exception as e:
-        print(f"Error while running the program: {e}")
+        host.print(f"Error while running the program: {e}")
         sys.exit(1)
 
 
@@ -200,9 +200,9 @@ def main():
     if args.interactive:
         if args.filename:
             # Run the file first, then enter interactive mode with the loaded program
-            print(f"Loading and running {args.filename}...")
+            host.print(f"Loading and running {args.filename}...")
             program = run_program(args.filename)
-            print("\nEntering interactive mode...")
+            host.print("\nEntering interactive mode...")
             run_interpreter(program)
         else:
             # Just start interactive mode

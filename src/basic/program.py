@@ -25,7 +25,7 @@ from basic.basictoken import BASICToken as Token, BASICToken
 from basic.basicparser import BASICParser
 from basic.flowsignal import FlowSignal
 from basic.lexer import Lexer
-
+from basic.basichost import host
 
 class BASICData:
 
@@ -229,7 +229,7 @@ class Program:
 
         for line_number in line_numbers:
             if int(line_number) >= start_line and int(line_number) <= end_line:
-                print(self.str_statement(line_number), end="")
+                host.print(self.str_statement(line_number), end="")
 
     def save(self, file):
         """Save the program

@@ -30,7 +30,7 @@ import disassembler.dc as dc
 # Import BASIC interpreter components
 from basic.lexer import Lexer
 from basic.program import Program
-
+from basic.basichost import host
 
 def disassemble_binary_to_memory(input_filename):
     """
@@ -89,9 +89,9 @@ def load_binary_program(program, filename):
 
 def run_interpreter(program=None):
     """Interactive mode is not available in basic-bns to protect source code."""
-    print("Error: Interactive mode is not available in basic-bns.")
-    print("This is to protect the source code of compiled binary files.")
-    print("Use the regular 'basic' command for interactive mode with .bas files.")
+    host.print("Error: Interactive mode is not available in basic-bns.")
+    host.print("This is to protect the source code of compiled binary files.")
+    host.print("Use the regular 'basic' command for interactive mode with .bas files.")
     sys.exit(1)
 
 
@@ -103,7 +103,7 @@ def run_binary_program(filename):
 
     # Check if the file exists
     if not os.path.exists(filename):
-        print(f"Error: File '{filename}' does not exist.")
+        host.print(f"Error: File '{filename}' does not exist.")
         sys.exit(1)
 
     # Initialize the program
@@ -116,7 +116,7 @@ def run_binary_program(filename):
         program.execute()
         return program
     except Exception as e:
-        print(f"Error while running the binary program: {e}")
+        host.print(f"Error while running the binary program: {e}")
         sys.exit(1)
 
 
